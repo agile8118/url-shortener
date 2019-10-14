@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>URL Shortener</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <h1>URL Shortener App</h1>
+    <p>Just put your long URL in the text box below and click shorten to get a nice small URL.</p>
+    <div class="box">
+      <input type="text" placeholder="Put your link here..."><br>
+      <button type="submit" id="shortenButton" class="button" name="button">Shorten</button>
+      <button type="submit" id="loadingButton" class="button display-none" disabled name="button">Shortening <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></button>
+    </div>
+
+      <div class="link">
+        <div class="link__real">https://apple.com/some-kind-of-text</div>
+        <div class="link__shortened">
+          <a id="shortenedLink" href="https://shorter.guru/472673">https://shorter.guru/472673</a>
+          <div class="tooltip" id="tooltip">
+            <button id="copyButton" class="link__copy"><img src="/copy-document.svg"></button>
+            <span id="tooltipText" class="tooltip__text">Copy</span>
+          </div>
+        </div>
+      </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
