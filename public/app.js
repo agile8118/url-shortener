@@ -11,7 +11,7 @@ var message = document.querySelector("#message");
 var box = document.querySelector("#box");
 
 // Unfocus the element
-function blurAll(){
+function blurAll() {
   var tmp = document.createElement("input");
   document.body.appendChild(tmp);
   tmp.focus();
@@ -20,15 +20,19 @@ function blurAll(){
 
 // Check if a text is valid url or not
 function validURL(str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  var pattern = new RegExp(
+    "^(https?:\\/\\/)?" + // protocol
+    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+    "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  ); // fragment locator
   return !!pattern.test(str);
 }
 
+// Show error to user
 function showError(msg) {
   box.classList.add("box--error");
   message.innerHTML = msg;
@@ -37,12 +41,17 @@ function showError(msg) {
   shortenedLink.innerHTML = "";
   shortenedLink.href = "";
 
+  // Make the button as normall
+  shortenButton.classList.remove("display-none");
+  loadingButton.classList.add("display-none");
+
   blurAll();
 }
 
+// Hide the error
 function hideError() {
   box.classList.remove("box--error");
-  message.innerHTML = '';
+  message.innerHTML = "";
   blurAll();
 }
 
@@ -52,7 +61,7 @@ realLinkInput.addEventListener("focus", function() {
 
 realLinkInput.addEventListener("focusout", function() {
   realLinkInput.placeholder = "Put your link here...";
-})
+});
 
 shortenButton.addEventListener("click", function() {
   // Make the button as loading
@@ -61,28 +70,40 @@ shortenButton.addEventListener("click", function() {
 
   var realUrl = document.querySelector("#realLinkInput").value;
   if (validURL(realUrl)) {
-    // Hide the error
-    hideError();
-    realLinkInput.value = '';
-    link.classList.remove("display-none");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.status === 200) {
+        try {
+          var realUrl = JSON.parse(this.response).realURL;
+          var shortenedUrl = JSON.parse(this.response).shortenedURL;
+          // Hide the error
+          hideError();
+          realLinkInput.value = "";
+          link.classList.remove("display-none");
 
-    if (realUrl.length > 35) {
-      realLinkDisplay.innerHTML = realUrl.substring(0,35) + "...";
-    } else {
-      realLinkDisplay.innerHTML = realUrl;
-    }
+          if (realUrl.length > 35) {
+            realLinkDisplay.innerHTML = realUrl.substring(0, 35) + "...";
+          } else {
+            realLinkDisplay.innerHTML = realUrl;
+          }
 
-    shortenedLink.innerHTML = "https://shorter.guru/432341";
-    shortenedLink.href = "https://shorter.guru/432341";
+          shortenedLink.innerHTML = shortenedUrl;
+          shortenedLink.href = shortenedUrl;
 
-    // Make the button as normall
-    shortenButton.classList.remove("display-none");
-    loadingButton.classList.add("display-none");
+          // Make the button as normall
+          shortenButton.classList.remove("display-none");
+          loadingButton.classList.add("display-none");
+        } catch (e) {}
+      } else if (this.status === 400) {
+        showError(this.responseText);
+      } else if (this.status === 500) {
+        showError("Sorry an unexpected error happened please try again.");
+      }
+    };
+    xhttp.open("POST", "/url", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify({ url: realUrl }));
   } else {
-    // Make the button as normall
-    shortenButton.classList.remove("display-none");
-    loadingButton.classList.add("display-none");
-
     if (realUrl.length > 0) {
       // Show a error to user
       showError("The URL you put is not valid.");
@@ -91,19 +112,18 @@ shortenButton.addEventListener("click", function() {
       showError("Please first put your URL here.");
     }
   }
-})
+});
 
 copyButton.addEventListener("click", function() {
   // Grap the text from the shortened link tag and copy it to the clipboard
   var text = document.getElementById("shortenedLink").innerHTML;
-    navigator.clipboard.writeText(text).then(function() {
-  });
+  navigator.clipboard.writeText(text).then(function() {});
 
   // Represent to the user that the link was copied
   tooltipText.innerHTML = "Copied!";
 });
 
 tooltip.addEventListener("mouseleave", function() {
-   tooltipText.innerHTML = "Copy";
-   blurAll();
+  tooltipText.innerHTML = "Copy";
+  blurAll();
 });
