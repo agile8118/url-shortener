@@ -3,6 +3,12 @@ var loadingButton = document.querySelector("#loadingButton");
 var copyButton = document.querySelector("#copyButton");
 var tooltip = document.querySelector("#tooltip");
 var tooltipText = document.querySelector("#tooltipText");
+var realLinkInput = document.querySelector("#realLinkInput");
+var link = document.querySelector("#link");
+var realLinkDisplay = document.querySelector("#realLinkDisplay");
+var shortenedLink = document.querySelector("#shortenedLink");
+var message = document.querySelector("#message");
+var box = document.querySelector("#box");
 
 // Unfocus the element
 function blurAll(){
@@ -12,9 +18,79 @@ function blurAll(){
   document.body.removeChild(tmp);
 }
 
+// Check if a text is valid url or not
+function validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return !!pattern.test(str);
+}
+
+function showError(msg) {
+  box.classList.add("box--error");
+  message.innerHTML = msg;
+  link.classList.add("display-none");
+  realLinkDisplay.innerHTML = "";
+  shortenedLink.innerHTML = "";
+  shortenedLink.href = "";
+
+  blurAll();
+}
+
+function hideError() {
+  box.classList.remove("box--error");
+  message.innerHTML = '';
+  blurAll();
+}
+
+realLinkInput.addEventListener("focus", function() {
+  realLinkInput.placeholder = "";
+});
+
+realLinkInput.addEventListener("focusout", function() {
+  realLinkInput.placeholder = "Put your link here...";
+})
+
 shortenButton.addEventListener("click", function() {
+  // Make the button as loading
   shortenButton.classList.add("display-none");
   loadingButton.classList.remove("display-none");
+
+  var realUrl = document.querySelector("#realLinkInput").value;
+  if (validURL(realUrl)) {
+    // Hide the error
+    hideError();
+    realLinkInput.value = '';
+    link.classList.remove("display-none");
+
+    if (realUrl.length > 35) {
+      realLinkDisplay.innerHTML = realUrl.substring(0,35) + "...";
+    } else {
+      realLinkDisplay.innerHTML = realUrl;
+    }
+
+    shortenedLink.innerHTML = "https://shorter.guru/432341";
+    shortenedLink.href = "https://shorter.guru/432341";
+
+    // Make the button as normall
+    shortenButton.classList.remove("display-none");
+    loadingButton.classList.add("display-none");
+  } else {
+    // Make the button as normall
+    shortenButton.classList.remove("display-none");
+    loadingButton.classList.add("display-none");
+
+    if (realUrl.length > 0) {
+      // Show a error to user
+      showError("The URL you put is not valid.");
+    } else {
+      // Show a error to user
+      showError("Please first put your URL here.");
+    }
+  }
 })
 
 copyButton.addEventListener("click", function() {

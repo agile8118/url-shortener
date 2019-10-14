@@ -54,6 +54,14 @@ p {
   text-align: center;
 }
 
+.box--error .message{
+  display: inline-block;
+}
+
+.box--error input {
+  border: 2px solid #c0392b;
+}
+
 input {
   /* display: block; */
   width: 70rem;
@@ -113,6 +121,10 @@ input:focus {
   color: #234ebd;
 }
 
+.link__shortened a:hover{
+  text-decoration: underline;
+}
+
 .link__copy {
   margin-left: 1rem;
   background: #eee;
@@ -132,6 +144,18 @@ input:focus {
 
 .link__copy img {
   width: 1.6rem;
+}
+
+.message {
+  text-align: left;
+  width: 70rem;
+  display: none;
+  font-size: 1.6rem;
+  background: #c0392b;
+  color: #fff;
+  padding: .8rem 2rem;
+  border-radius: 7px;
+  margin-bottom: 1rem;
 }
 
 /* Tooltip */

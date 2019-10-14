@@ -16,16 +16,17 @@
   <body>
     <h1>URL Shortener App</h1>
     <p>Just put your long URL in the text box below and click shorten to get a nice small URL.</p>
-    <div class="box">
-      <input type="text" placeholder="Put your link here..."><br>
+    <div class="box" id="box">
+      <div class="message" id="message"></div><br>
+      <input type="text" id="realLinkInput" placeholder="Put your link here..."><br>
       <button type="submit" id="shortenButton" class="button" name="button">Shorten</button>
       <button type="submit" id="loadingButton" class="button display-none" disabled name="button">Shortening <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></button>
     </div>
 
-      <div class="link">
-        <div class="link__real">https://apple.com/some-kind-of-text</div>
+      <div class="link display-none" id="link">
+        <div class="link__real" id="realLinkDisplay"></div>
         <div class="link__shortened">
-          <a id="shortenedLink" href="https://shorter.guru/472673">https://shorter.guru/472673</a>
+          <a id="shortenedLink" target="_blank" href=""></a>
           <div class="tooltip" id="tooltip">
             <button id="copyButton" class="link__copy"><img src="/copy-document.svg"></button>
             <span id="tooltipText" class="tooltip__text">Copy</span>
