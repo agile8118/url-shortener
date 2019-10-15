@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+const DB = require("./database");
+const middlewares = require("./middlewares");
 
 var app = express();
 
@@ -14,32 +16,28 @@ app.get("/", (req, res) => {
   res.render("index.html");
 });
 
-app.post("/url", (req, res) => {
+app.post("/url", middlewares.isValidURL, async (req, res) => {
   const realUrl = req.body.url;
-  // Function to validate url
-  const validURL = str => {
-    var pattern = new RegExp(
-      "^(https?:\\/\\/)?" +
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-        "((\\d{1,3}\\.){3}\\d{1,3}))" +
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-        "(\\?[;&a-z\\d%_.~+=-]*)?" +
-        "(\\#[-a-z\\d_]*)?$",
-      "i"
-    );
-    return !!pattern.test(str);
-  };
+  let urlId = (Math.floor(Math.random() * 90000) + 10000).toString();
 
-  if (realUrl.length === 0)
-    return res.status(400).send("Please first put your URL here.");
-  if (validURL(realUrl)) {
-    return res.send({
-      realURL: realUrl,
-      shortenedURL: "https://shorter.guru/456123"
-    });
-  } else {
-    return res.status(400).send("The URL you put is not valid.");
+  let url_ids = [];
+
+  const shortened_url_ids = await DB.find("SELECT shortened_url_id FROM urls");
+
+  shortened_url_ids.map(id => {
+    url_ids.push(id.shortened_url_id);
+  });
+
+  while (url_ids.includes(urlId)) {
+    urlId = Math.floor(Math.random() * 90000) + 10000;
   }
+
+  await DB.insert("urls", { real_url: realUrl, shortened_url_id: urlId });
+
+  return res.send({
+    realURL: realUrl,
+    shortenedURL: `https://shorter.guru/${urlId}`
+  });
 });
 
 app.listen(port, () => {
