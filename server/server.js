@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const DB = require("./database");
 const middlewares = require("./middlewares");
+const keys = require("./config/keys");
 
 var app = express();
 
@@ -16,28 +17,44 @@ app.get("/", (req, res) => {
   res.render("index.html");
 });
 
-app.post("/url", middlewares.isValidURL, async (req, res) => {
-  const realUrl = req.body.url;
-  let urlId = (Math.floor(Math.random() * 90000) + 10000).toString();
+app.post(
+  "/url",
+  middlewares.isValidURL,
+  middlewares.checkRealUrlExistence,
+  async (req, res) => {
+    const realUrl = req.body.url;
+    let urlId = (Math.floor(Math.random() * 90000) + 10000).toString();
 
-  let url_ids = [];
+    let url_ids = [];
 
-  const shortened_url_ids = await DB.find("SELECT shortened_url_id FROM urls");
+    const shortened_url_ids = await DB.find(
+      "SELECT shortened_url_id FROM urls"
+    );
 
-  shortened_url_ids.map(id => {
-    url_ids.push(id.shortened_url_id);
-  });
+    shortened_url_ids.map(id => {
+      url_ids.push(id.shortened_url_id);
+    });
 
-  while (url_ids.includes(urlId)) {
-    urlId = Math.floor(Math.random() * 90000) + 10000;
+    while (url_ids.includes(urlId)) {
+      urlId = Math.floor(Math.random() * 90000) + 10000;
+    }
+
+    await DB.insert("urls", { real_url: realUrl, shortened_url_id: urlId });
+
+    return res.send({
+      realURL: realUrl,
+      shortenedURL: `${keys.domain}${urlId}`
+    });
   }
+);
 
-  await DB.insert("urls", { real_url: realUrl, shortened_url_id: urlId });
+// Redirect to the real url
+app.get("/:id", async (req, res) => {
+  const { real_url } = await DB.find(
+    `SELECT real_url FROM urls WHERE shortened_url_id=${req.params.id}`
+  );
 
-  return res.send({
-    realURL: realUrl,
-    shortenedURL: `https://shorter.guru/${urlId}`
-  });
+  res.redirect(real_url);
 });
 
 app.listen(port, () => {

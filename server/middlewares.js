@@ -1,3 +1,5 @@
+const DB = require("./database");
+const keys = require("./config/keys");
 const middlewares = {};
 
 middlewares.isValidURL = (req, res, next) => {
@@ -24,6 +26,26 @@ middlewares.isValidURL = (req, res, next) => {
     next();
   } else {
     return res.status(400).send("The URL you put is not valid.");
+  }
+};
+
+middlewares.checkRealUrlExistence = async (req, res, next) => {
+  try {
+    const realUrl = req.body.url;
+    const result = await DB.find(
+      `select * from urls where real_url = '${realUrl}'`
+    );
+
+    if (result.length > 0) {
+      return res.send({
+        realURL: result[0].real_url,
+        shortenedURL: `${keys.domain}${result[0].shortened_url_id}`
+      });
+    } else {
+      next();
+    }
+  } catch (error) {
+    res.status(500).send("An unkown error ocurred.");
   }
 };
 

@@ -12,7 +12,7 @@ DB.find = query => {
   return new Promise(function(resolve, reject) {
     connection.query(query, function(error, results) {
       if (error) {
-        reject("An unkown error ocurred.");
+        reject(error);
       } else {
         if (results.length === 1) {
           resolve(results[0]);
@@ -29,7 +29,7 @@ DB.insert = (table, data) => {
     const query = `INSERT INTO ${table} SET ?`;
     connection.query(query, data, function(error, result) {
       if (error) {
-        reject("An unkown error ocurred.");
+        reject(error);
       }
       resolve();
     });
