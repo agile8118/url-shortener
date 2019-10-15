@@ -13,10 +13,12 @@ app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 2080;
 
+// Show the home page
 app.get("/", (req, res) => {
   res.render("index.html");
 });
 
+// Get the url, shorten it and save to database
 app.post(
   "/url",
   middlewares.isValidURL,
@@ -31,9 +33,13 @@ app.post(
       "SELECT shortened_url_id FROM urls"
     );
 
-    shortened_url_ids.map(id => {
-      url_ids.push(id.shortened_url_id);
-    });
+    if (shortened_url_ids[0]) {
+      shortened_url_ids.map(id => {
+        url_ids.push(id.shortened_url_id);
+      });
+    } else {
+      url_ids.push(shortened_url_ids.shortened_url_id);
+    }
 
     while (url_ids.includes(urlId)) {
       urlId = Math.floor(Math.random() * 90000) + 10000;

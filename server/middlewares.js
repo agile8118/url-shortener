@@ -36,10 +36,10 @@ middlewares.checkRealUrlExistence = async (req, res, next) => {
       `select * from urls where real_url = '${realUrl}'`
     );
 
-    if (result.length > 0) {
-      return res.send({
-        realURL: result[0].real_url,
-        shortenedURL: `${keys.domain}${result[0].shortened_url_id}`
+    if (result.id) {
+      res.status(200).send({
+        realURL: result.real_url,
+        shortenedURL: `${keys.domain}${result.shortened_url_id}`
       });
     } else {
       next();

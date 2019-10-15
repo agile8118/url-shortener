@@ -6,6 +6,17 @@ var connection = mysql.createConnection({
   database: "url_shortener"
 });
 
+const sql = `CREATE TABLE IF NOT EXISTS urls (
+   id INTEGER AUTO_INCREMENT PRIMARY KEY,
+   real_url TEXT NOT NULL,
+   shortened_url_id VARCHAR(100) NOT NULL UNIQUE,
+   created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+   views INTEGER DEFAULT 0 NOT NULL
+ );`;
+connection.query(sql, function(err, result) {
+  if (err) throw err;
+});
+
 const DB = {};
 
 DB.find = query => {
