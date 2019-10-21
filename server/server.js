@@ -25,6 +25,7 @@ app.post(
   middlewares.checkRealUrlExistence,
   async (req, res) => {
     const realUrl = req.body.url;
+    // Generate a 6 digts number to be used as url shortened id
     let urlId = (Math.floor(Math.random() * 90000) + 10000).toString();
 
     let url_ids = [];
@@ -56,9 +57,12 @@ app.post(
 
 // Redirect to the real url
 app.get("/:id", async (req, res) => {
-  const { real_url } = await DB.find(
-    `SELECT real_url FROM urls WHERE shortened_url_id=${req.params.id}`
+  const { real_url, id } = await DB.find(
+    `SELECT real_url, id FROM urls WHERE shortened_url_id=${req.params.id}`
   );
+
+  // Increment the views number by one
+  await DB.update(`UPDATE urls SET views = views + 1 WHERE id = ?`, [id]);
 
   res.redirect(real_url);
 });

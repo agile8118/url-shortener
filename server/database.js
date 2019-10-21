@@ -47,4 +47,15 @@ DB.insert = (table, data) => {
   });
 };
 
+DB.update = (sql, data) => {
+  return new Promise(function(resolve, reject) {
+    connection.query(sql, data, (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve();
+    });
+  });
+};
+
 module.exports = DB;
