@@ -1,24 +1,43 @@
 const mysql = require("mysql");
 
-var connection = mysql.createConnection({
+// Connect to the database
+let connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   database: "url_shortener"
 });
 
-const sql = `CREATE TABLE IF NOT EXISTS urls (
+// Create the urls table
+connection.query(
+  `CREATE TABLE IF NOT EXISTS urls (
    id INTEGER AUTO_INCREMENT PRIMARY KEY,
    real_url TEXT NOT NULL,
    shortened_url_id VARCHAR(100) NOT NULL UNIQUE,
    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
    views INTEGER DEFAULT 0 NOT NULL
- );`;
-connection.query(sql, function(err, result) {
-  if (err) throw err;
-});
+ );`,
+  function(err, result) {
+    if (err) throw err;
+  }
+);
+
+// Create user table
+connection.query(
+  `CREATE TABLE IF NOT EXISTS users (
+   id INTEGER AUTO_INCREMENT PRIMARY KEY,
+   google_id VARCHAR(200) NOT NULL,
+   email VARCHAR(200) NOT NULL UNIQUE,
+   name VARCHAR(200) NOT NULL,
+   created_at TIMESTAMP DEFAULT NOW() NOT NULL
+ );`,
+  function(err, result) {
+    if (err) throw err;
+  }
+);
 
 const DB = {};
 
+// Fetch an item from the database
 DB.find = query => {
   return new Promise(function(resolve, reject) {
     connection.query(query, function(error, results) {
@@ -35,6 +54,7 @@ DB.find = query => {
   });
 };
 
+// Insert an item to a specified table
 DB.insert = (table, data) => {
   return new Promise(function(resolve, reject) {
     const query = `INSERT INTO ${table} SET ?`;
@@ -42,11 +62,12 @@ DB.insert = (table, data) => {
       if (error) {
         reject(error);
       }
-      resolve();
+      resolve(result.insertId);
     });
   });
 };
 
+// Update an item in the database
 DB.update = (sql, data) => {
   return new Promise(function(resolve, reject) {
     connection.query(sql, data, (error, results) => {

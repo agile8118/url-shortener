@@ -1,17 +1,48 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const cookieSession = require("cookie-session");
 const DB = require("./database");
 const middlewares = require("./middlewares");
 const keys = require("./config/keys");
+require("./passport");
 
 var app = express();
 
 const publicPath = path.join(__dirname, "../public");
 app.use(express.static(publicPath));
 app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    keys: [keys.cookieKey]
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 const port = process.env.PORT || 2080;
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"]
+  })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google"),
+  (req, res) => {
+    res.redirect("/");
+  }
+);
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
 
 // Show the home page
 app.get("/", (req, res) => {
@@ -46,6 +77,7 @@ app.post(
       urlId = Math.floor(Math.random() * 90000) + 10000;
     }
 
+    // Insert a new record to url table
     await DB.insert("urls", { real_url: realUrl, shortened_url_id: urlId });
 
     return res.send({
