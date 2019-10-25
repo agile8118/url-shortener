@@ -17,17 +17,25 @@ body {
   line-height: 1.7;
   color: #555;
   position: relative;
-  background: #0A1636;
+  background: #7b88ac;
   height: 100vh;
+  padding: 2rem 0;
 }
 
 h1 {
   display: block;
   text-align: center;
-  padding-top: 7rem;
   color: #fff;
   text-transform: uppercase;
   font-size: 3rem;
+  font-weight: 300;
+}
+
+h2 {
+  font-size: 2.5rem;
+  display: block;
+  text-align: center;
+  color: #fff;
   font-weight: 300;
 }
 
@@ -39,6 +47,20 @@ p {
   margin-top: 1rem;
 }
 
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.a-1 {
+  font-size: 1.4rem;
+  padding-top: 3rem;
+}
+
 .display-none {
   display: none !important;
 }
@@ -46,6 +68,19 @@ p {
 .text-center {
   text-align: center;
   align-items: flex-start
+}
+
+.section {
+  background: #0A1636;
+  border-radius: 7px;
+  width: 100rem;
+  padding: 5rem 2rem 4.5rem 2rem;
+  margin: 4rem auto;
+  box-shadow: 5px 5px 12px 4px rgba(0,0,0,.1);
+}
+
+.section--2 {
+  padding: 4rem 7rem 4.5rem 7rem;
 }
 
 .box {
@@ -63,7 +98,6 @@ p {
 }
 
 input {
-  /* display: block; */
   width: 70rem;
   text-align: center;
   color: #555;
@@ -104,13 +138,35 @@ input:focus {
   cursor: not-allowed;
 }
 
+.button-google-signin {
+  background: #D73D32;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  width: 26rem;
+  height: 5rem;
+  margin: 3rem auto 0 auto;
+
+}
+
+.button-google-signin img {
+  width: 3rem;
+  margin-right: 1rem;
+}
+
+.button-google-signin:hover,
+.button-google-signin:focus {
+  background: #c2362c;
+  text-decoration: none;
+}
+
 .link {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #fff;
   font-size: 1.6rem;
-  margin: 6rem auto 0 auto;
+  margin: 4rem auto 0 auto;
   border-radius: 7px;
   width: 65rem;
   padding: 1.4rem 3rem;
@@ -204,6 +260,7 @@ input:focus {
   position: relative;
   width: 18px;
 }
+
 .lds-ellipsis div {
   position: absolute;
   top: -7px;
@@ -213,22 +270,27 @@ input:focus {
   background: #fff;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
+
 .lds-ellipsis div:nth-child(1) {
   left: 3px;
   animation: lds-ellipsis1 0.6s infinite;
 }
+
 .lds-ellipsis div:nth-child(2) {
   left: 3px;
   animation: lds-ellipsis2 0.6s infinite;
 }
+
 .lds-ellipsis div:nth-child(3) {
   left: 13px;
   animation: lds-ellipsis2 0.6s infinite;
 }
+
 .lds-ellipsis div:nth-child(4) {
   left: 22px;
   animation: lds-ellipsis3 0.6s infinite;
 }
+
 @keyframes lds-ellipsis1 {
   0% {
     transform: scale(0);
@@ -237,6 +299,7 @@ input:focus {
     transform: scale(1);
   }
 }
+
 @keyframes lds-ellipsis3 {
   0% {
     transform: scale(1);
@@ -245,6 +308,7 @@ input:focus {
     transform: scale(0);
   }
 }
+
 @keyframes lds-ellipsis2 {
   0% {
     transform: translate(0, 0);

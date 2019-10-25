@@ -10,13 +10,12 @@ var shortenedLink = document.querySelector("#shortenedLink");
 var message = document.querySelector("#message");
 var box = document.querySelector("#box");
 
-// Unfocus the element
-function blurAll() {
-  var tmp = document.createElement("input");
-  document.body.appendChild(tmp);
-  tmp.focus();
-  document.body.removeChild(tmp);
-}
+// Buttons won't get focused on click
+document.addEventListener("click", function(e) {
+  if (document.activeElement.toString() == "[object HTMLButtonElement]") {
+    document.activeElement.blur();
+  }
+});
 
 // Check if a text is valid url or not
 function validURL(str) {
@@ -44,15 +43,12 @@ function showError(msg) {
   // Make the button as normall
   shortenButton.classList.remove("display-none");
   loadingButton.classList.add("display-none");
-
-  blurAll();
 }
 
 // Hide the error
 function hideError() {
   box.classList.remove("box--error");
   message.innerHTML = "";
-  blurAll();
 }
 
 realLinkInput.addEventListener("focus", function() {
@@ -125,5 +121,4 @@ copyButton.addEventListener("click", function() {
 
 tooltip.addEventListener("mouseleave", function() {
   tooltipText.innerHTML = "Copy";
-  blurAll();
 });
