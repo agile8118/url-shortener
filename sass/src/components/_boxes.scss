@@ -1,0 +1,25 @@
+.box {
+  display: block;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.box--error .message{
+  display: inline-block;
+}
+
+.box--error input {
+  border: 2px solid #c0392b;
+}
+
+.message {
+  text-align: left;
+  width: 70rem;
+  display: none;
+  font-size: 1.6rem;
+  background: #c0392b;
+  color: #fff;
+  padding: .8rem 2rem;
+  border-radius: 7px;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,35 @@
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 18px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: -7px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 3px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 3px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 13px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 22px;
+  animation: lds-ellipsis3 0.6s infinite;
+}

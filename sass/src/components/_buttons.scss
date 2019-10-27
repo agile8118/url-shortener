@@ -1,0 +1,45 @@
+.button {
+  padding: 1.5rem 4rem;
+  font-size: 1.6rem;
+  background-color: #2A5BD7;
+  border: none;
+  color: #fff;
+  border-radius: 7px;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #234ebd;
+}
+
+.button:focus {
+  outline: none;
+  background-color: #234ebd;
+}
+
+.button:disabled {
+  background: rgba(42, 91, 215, 0.5);
+  cursor: not-allowed;
+}
+
+.button-google-signin {
+  background: #D73D32;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  width: 26rem;
+  height: 5rem;
+  margin: 3rem auto 0 auto;
+
+}
+
+.button-google-signin img {
+  width: 3rem;
+  margin-right: 1rem;
+}
+
+.button-google-signin:hover,
+.button-google-signin:focus {
+  background: #c2362c;
+  text-decoration: none;
+}

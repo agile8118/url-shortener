@@ -1,0 +1,41 @@
+.link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  font-size: 1.6rem;
+  margin: 4rem auto 0 auto;
+  border-radius: 7px;
+  width: 65rem;
+  padding: 1.4rem 3rem;
+}
+
+.link__shortened a{
+  text-decoration: none;
+  color: #234ebd;
+}
+
+.link__shortened a:hover{
+  text-decoration: underline;
+}
+
+.link__copy {
+  margin-left: 1rem;
+  background: #eee;
+  border: none;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 500px;
+  cursor: pointer;
+}
+
+.link__copy:hover,
+.link__copy:focus {
+  background: #e2dbdb;
+  outline: none;
+}
+
+.link__copy img {
+  width: 1.6rem;
+}

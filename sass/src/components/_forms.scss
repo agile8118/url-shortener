@@ -1,0 +1,16 @@
+input {
+  width: 70rem;
+  text-align: center;
+  color: #555;
+  font-size: 1.6rem;
+  padding: 1.3rem 2rem;
+  border: 1px solid #eee;
+  border-radius: 7px;
+  margin-bottom: 3rem;
+}
+
+input:focus {
+  outline-color: #2A5BD7;
+  outline-width: thick;
+  outline-offset: -1px;
+}

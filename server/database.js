@@ -1,10 +1,13 @@
 const mysql = require("mysql");
+const keys = require("./config/keys");
 
 // Connect to the database
 let connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "url_shortener"
+  host: keys.mysqlHost,
+  user: keys.mysqlUser,
+  database: keys.mysqlDatabase,
+  password: keys.mysqlPassword,
+  port: keys.mysqlPort
 });
 
 // Create the urls table
