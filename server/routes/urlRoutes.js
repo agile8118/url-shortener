@@ -1,4 +1,4 @@
-const DB = require("../database");
+const { DB } = require("../database");
 const middlewares = require("../middlewares");
 const keys = require("../config/keys");
 
@@ -38,7 +38,6 @@ module.exports = app => {
 
       // Insert a new record to url table
       await DB.insert("urls", { real_url: realUrl, shortened_url_id: urlId });
-
       return res.send({
         realURL: realUrl,
         shortenedURL: `${keys.domain}${urlId}`

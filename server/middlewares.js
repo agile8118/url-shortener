@@ -1,4 +1,4 @@
-const DB = require("./database");
+const { DB } = require("./database");
 const keys = require("./config/keys");
 const middlewares = {};
 

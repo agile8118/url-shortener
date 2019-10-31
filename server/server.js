@@ -25,6 +25,12 @@ app.use(passport.session());
 require("./routes/authRoutes")(app);
 require("./routes/urlRoutes")(app);
 
-app.listen(port, () => {
-  console.log("Server is on port " + port);
-});
+if (process.env.NODE_ENV === "test") {
+  // Export the server for testing
+  module.exports = app;
+} else {
+  // If not in test mode, server should listen on the specified port
+  app.listen(port, () => {
+    console.log("Server is on port " + port);
+  });
+}

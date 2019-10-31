@@ -13,12 +13,12 @@ let connection = mysql.createConnection({
 // Create the urls table
 connection.query(
   `CREATE TABLE IF NOT EXISTS urls (
-   id INTEGER AUTO_INCREMENT PRIMARY KEY,
-   real_url TEXT NOT NULL,
-   shortened_url_id VARCHAR(100) NOT NULL UNIQUE,
-   created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-   views INTEGER DEFAULT 0 NOT NULL
- );`,
+     id INTEGER AUTO_INCREMENT PRIMARY KEY,
+     real_url TEXT NOT NULL,
+     shortened_url_id VARCHAR(100) NOT NULL UNIQUE,
+     created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+     views INTEGER DEFAULT 0 NOT NULL
+   );`,
   function(err, result) {
     if (err) throw err;
   }
@@ -27,12 +27,12 @@ connection.query(
 // Create user table
 connection.query(
   `CREATE TABLE IF NOT EXISTS users (
-   id INTEGER AUTO_INCREMENT PRIMARY KEY,
-   google_id VARCHAR(200) NOT NULL,
-   email VARCHAR(200) NOT NULL UNIQUE,
-   name VARCHAR(200) NOT NULL,
-   created_at TIMESTAMP DEFAULT NOW() NOT NULL
- );`,
+     id INTEGER AUTO_INCREMENT PRIMARY KEY,
+     google_id VARCHAR(200) NOT NULL,
+     email VARCHAR(200) NOT NULL UNIQUE,
+     name VARCHAR(200) NOT NULL,
+     created_at TIMESTAMP DEFAULT NOW() NOT NULL
+   );`,
   function(err, result) {
     if (err) throw err;
   }
@@ -82,4 +82,4 @@ DB.update = (sql, data) => {
   });
 };
 
-module.exports = DB;
+module.exports = { DB, connection };
