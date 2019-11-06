@@ -1,21 +1,18 @@
 import React, { Component } from "react";
 import axios from "axios";
+import LinkShow from "./LinkShow";
 import lib from "../lib";
 
 class UrlShortener extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { url: "" };
+    this.state = { url: "", realUrl: "", shortenedUrl: "" };
 
     this.loadingButton = React.createRef();
     this.shortenButton = React.createRef();
-    this.tooltipText = React.createRef();
     this.box = React.createRef();
     this.message = React.createRef();
-    this.link = React.createRef();
-    this.realLinkDisplay = React.createRef();
-    this.shortenedLink = React.createRef();
   }
 
   async onShortenButtonClick() {
@@ -31,18 +28,7 @@ class UrlShortener extends Component {
 
         // Hide the error
         this.hideError();
-        this.setState({ url: "" });
-        this.link.current.classList.remove("display-none");
-
-        if (realUrl.length > 35) {
-          this.realLinkDisplay.current.innerHTML =
-            realUrl.substring(0, 35) + "...";
-        } else {
-          this.realLinkDisplay.current.innerHTML = realUrl;
-        }
-
-        this.shortenedLink.current.innerHTML = shortenedUrl;
-        this.shortenedLink.current.href = shortenedUrl;
+        this.setState({ url: "", realUrl, shortenedUrl });
 
         // Make the button as normall
         this.shortenButton.current.classList.remove("display-none");
@@ -67,22 +53,10 @@ class UrlShortener extends Component {
     }
   }
 
-  onCopyButtonClick() {
-    // Grap the text from the shortened link tag and copy it to the clipboard
-    var text = this.shortenedLink.current.innerHTML;
-    navigator.clipboard.writeText(text).then(function() {});
-
-    // Represent to the user that the link was copied
-    this.tooltipText.current.innerHTML = "Copied!";
-  }
-
   showError(msg) {
     this.box.current.classList.add("box--error");
     this.message.current.innerHTML = msg;
-    this.link.current.classList.add("display-none");
-    this.realLinkDisplay.current.innerHTML = "";
-    this.shortenedLink.current.innerHTML = "";
-    this.shortenedLink.current.href = "";
+    this.setState({ realUrl: "", shortenedUrl: "" });
 
     // Make the button as normall
     this.shortenButton.current.classList.remove("display-none");
@@ -148,28 +122,11 @@ class UrlShortener extends Component {
           </button>
         </div>
 
-        <div className="link display-none" ref={this.link}>
-          <div className="link__real" ref={this.realLinkDisplay}></div>
-          <div className="link__shortened">
-            <a ref={this.shortenedLink} target="_blank" href=""></a>
-            <div className="tooltip">
-              <button
-                onClick={() => {
-                  this.onCopyButtonClick();
-                }}
-                onMouseLeave={() => {
-                  this.tooltipText.current.innerHTML = "Copy";
-                }}
-                className="link__copy"
-              >
-                <img src="/copy-document.svg" />
-              </button>
-              <span ref={this.tooltipText} className="tooltip__text">
-                Copy
-              </span>
-            </div>
-          </div>
-        </div>
+        <LinkShow
+          realUrl={this.state.realUrl}
+          shortenedUrl={this.state.shortenedUrl}
+        />
+
         <p className="a-1">
           By clicking Shorten, you agree to our <a href="#">Privacy Policy</a>{" "}
           and
