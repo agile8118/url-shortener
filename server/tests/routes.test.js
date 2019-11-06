@@ -1,6 +1,6 @@
 const request = require("supertest");
-const app = require("../server/server");
-const { connection } = require("../server/database");
+const { app, server } = require("../server");
+const { connection } = require("../database");
 
 describe("URL Endpoints", () => {
   test("should create a new shortened url", async done => {
@@ -28,6 +28,8 @@ describe("URL Endpoints", () => {
   afterAll(async done => {
     // Closing the DB connection
     connection.end();
+    // Close the server
+    server.close();
     done();
   });
 });

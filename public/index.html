@@ -14,76 +14,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <section class="section">
-      <h1>URL Shortener App</h1>
-      <p>
-        Just put your long URL in the text box below and click shorten to get a
-        nice small URL.
-      </p>
-
-      <div class="box" id="box">
-        <div class="message" id="message"></div>
-        <input
-          type="text"
-          id="realLinkInput"
-          placeholder="Put your link here..."
-        /><br />
-        <button type="submit" id="shortenButton" class="button" name="button">
-          Shorten
-        </button>
-        <button
-          type="submit"
-          id="loadingButton"
-          class="button display-none"
-          disabled
-          name="button"
-        >
-          Shortening
-          <div class="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </button>
-      </div>
-
-      <div class="link display-none" id="link">
-        <div class="link__real" id="realLinkDisplay"></div>
-        <div class="link__shortened">
-          <a id="shortenedLink" target="_blank" href=""></a>
-          <div class="tooltip" id="tooltip">
-            <button id="copyButton" class="link__copy">
-              <img src="/copy-document.svg" />
-            </button>
-            <span id="tooltipText" class="tooltip__text">Copy</span>
-          </div>
-        </div>
-      </div>
-      <p class="a-1">
-        By clicking Shorten, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.
-      </p>
-    </section>
-
-    <section class="section section--2">
-      <h2>Sign in to get permanent shortened links</h2>
-      <p>
-        If you create shortened links as a guest, your links will be removed from our database <strong>if they get no views
-        after 1 month</strong>, whereas if you sign in, your links will be permanent and they will never get removed unless you choose so.
-      </p>
-      <p>
-        Signing in is <strong>completely free</strong> and requires only some simple clicks. We won't send you any email, newsletter whatsoever, your account is just
-        something that we can use to keep track of your links.
-      </p>
-      <p>
-        Another advantage of signing in is that you can see the list of all the links you've shortened with your account.
-      </p>
-      <a class="button button-google-signin" href="/auth/google">
-        <img src="/google-icon.svg"> Sign in with google
-      </a>
-    </section>
+    <div id="url-shortener"></div>
+    <div id="sign-in-box"></div>
 
     <script src="/app.js"></script>
-
+    <script>
+      // Buttons won't get focused on click
+      document.addEventListener("click", function(e) {
+        if (document.activeElement.toString() == "[object HTMLButtonElement]") {
+          document.activeElement.blur();
+        }
+      });
+    </script>
   </body>
 </html>
