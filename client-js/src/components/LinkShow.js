@@ -1,24 +1,15 @@
 import React from "react";
 
 export default ({ realUrl, shortenedUrl }) => {
-  // Make the link component hidden by default
-  let className = "link display-none";
-  let displayedRealUrl;
-
-  // This will make the link component to get shown on the screen
-  if (realUrl) {
-    className = "link";
-  }
+  // Decide whether to show the link component or not
+  let linkClassName = realUrl ? "link" : "link display-none";
 
   // If the real url was longer than 35 characters, substring it
-  if (realUrl.length > 35) {
-    displayedRealUrl = realUrl.substring(0, 35) + "...";
-  } else {
-    displayedRealUrl = realUrl;
-  }
+  let displayedRealUrl = realUrl;
+  if (realUrl.length > 35) displayedRealUrl = realUrl.substring(0, 35) + "...";
 
   return (
-    <div className={className}>
+    <div className={linkClassName}>
       <div className="link__real">{displayedRealUrl}</div>
       <div className="link__shortened">
         <a target="_blank" href={shortenedUrl}>

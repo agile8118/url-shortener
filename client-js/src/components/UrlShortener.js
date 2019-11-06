@@ -7,15 +7,16 @@ class UrlShortener extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { url: "", realUrl: "", shortenedUrl: "" };
+    this.state = { url: "", realUrl: "", shortenedUrl: "", errorMessage: "" };
 
     this.loadingButton = React.createRef();
     this.shortenButton = React.createRef();
-    this.box = React.createRef();
-    this.message = React.createRef();
   }
 
-  async onShortenButtonClick() {
+  async onFormSubmit(event) {
+    event.preventDefault();
+    // Move the focus out of the text input after form submition
+    this.shortenButton.current.focus();
     // Make the button as loading
     this.shortenButton.current.classList.add("display-none");
     this.loadingButton.current.classList.remove("display-none");
@@ -23,17 +24,21 @@ class UrlShortener extends Component {
     if (lib.validURL(this.state.url)) {
       try {
         const { data } = await axios.post("/url", { url: this.state.url });
-        const realUrl = data.realURL;
-        const shortenedUrl = data.shortenedURL;
 
         // Hide the error
         this.hideError();
-        this.setState({ url: "", realUrl, shortenedUrl });
+
+        this.setState({
+          url: "",
+          realUrl: data.realURL,
+          shortenedUrl: data.shortenedURL
+        });
 
         // Make the button as normall
         this.shortenButton.current.classList.remove("display-none");
         this.loadingButton.current.classList.add("display-none");
       } catch (error) {
+        // Show relevent errors to user on server errors
         if (error.response.status === 400) {
           this.showError(this.responseText);
         }
@@ -45,18 +50,16 @@ class UrlShortener extends Component {
         }
       }
     } else if (this.state.url.length > 0) {
-      // Show a error to user
+      // Show an error to user if the url is not valid
       this.showError("The URL you put is not valid.");
     } else {
-      // Show a error to user
+      // Show an error to user if no url has been provided
       this.showError("Please first put your URL here.");
     }
   }
 
   showError(msg) {
-    this.box.current.classList.add("box--error");
-    this.message.current.innerHTML = msg;
-    this.setState({ realUrl: "", shortenedUrl: "" });
+    this.setState({ realUrl: "", shortenedUrl: "", errorMessage: msg });
 
     // Make the button as normall
     this.shortenButton.current.classList.remove("display-none");
@@ -64,11 +67,12 @@ class UrlShortener extends Component {
   }
 
   hideError() {
-    this.box.current.classList.remove("box--error");
-    this.message.current.innerHTML = "";
+    this.setState({ errorMessage: "" });
   }
 
   render() {
+    let boxClassName = this.state.errorMessage ? "box box--error" : "box";
+
     return (
       <section className="section">
         <h1>URL Shortener App</h1>
@@ -77,49 +81,42 @@ class UrlShortener extends Component {
           a nice small URL.
         </p>
 
-        <div className="box" ref={this.box}>
-          <div className="message" ref={this.message}></div>
-          <input
-            type="text"
-            onChange={event => {
-              this.setState({ url: event.target.value });
-            }}
-            onFocus={event => {
-              event.target.placeholder = "";
-            }}
-            onBlur={event => {
-              event.target.placeholder = "Put your link here...";
-            }}
-            value={this.state.url}
-            placeholder="Put your link here..."
-          />
-          <br />
-          <button
-            type="submit"
-            onClick={() => {
-              this.onShortenButtonClick();
-            }}
-            ref={this.shortenButton}
-            className="button"
-            name="button"
-          >
-            Shorten
-          </button>
-          <button
-            type="submit"
-            ref={this.loadingButton}
-            className="button display-none"
-            disabled
-            name="button"
-          >
-            Shortening
-            <div className="lds-ellipsis">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </button>
+        <div className={boxClassName}>
+          <div className="message">{this.state.errorMessage}</div>
+          <form onSubmit={event => this.onFormSubmit(event)}>
+            <input
+              type="text"
+              onChange={event => {
+                this.setState({ url: event.target.value });
+              }}
+              onFocus={event => {
+                event.target.placeholder = "";
+              }}
+              onBlur={event => {
+                event.target.placeholder = "Put your link here...";
+              }}
+              value={this.state.url}
+              placeholder="Put your link here..."
+            />
+            <br />
+            <button type="submit" ref={this.shortenButton} className="button">
+              Shorten
+            </button>
+            <button
+              type="button"
+              ref={this.loadingButton}
+              className="button display-none"
+              disabled
+            >
+              Shortening
+              <div className="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </button>
+          </form>
         </div>
 
         <LinkShow
