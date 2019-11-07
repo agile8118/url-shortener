@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import UrlShortener from "./components/UrlShortener";
-import SignInBox from "./components/SignInBox";
+import BottomBox from "./components/BottomBox";
 
 ReactDOM.render(<UrlShortener />, document.querySelector("#url-shortener"));
-ReactDOM.render(<SignInBox />, document.querySelector("#sign-in-box"));
+ReactDOM.render(<BottomBox />, document.querySelector("#sign-in-box"));

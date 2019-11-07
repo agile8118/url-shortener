@@ -20,4 +20,10 @@ module.exports = app => {
     req.logout();
     res.redirect("/");
   });
+
+  // Check to see if a user is logged in or not
+  app.post("/auth", (req, res) => {
+    if (req.user) return res.send({ isSignedIn: true });
+    res.send({ isSignedIn: false });
+  });
 };
