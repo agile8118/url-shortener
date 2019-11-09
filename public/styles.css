@@ -77,6 +77,9 @@ a:hover {
   text-align: center;
   align-items: flex-start; }
 
+.margin-top-md {
+  margin-top: 2rem; }
+
 @keyframes lds-ellipsis1 {
   0% {
     transform: scale(0); }
@@ -180,6 +183,9 @@ input:focus {
   border-radius: 7px;
   width: 65rem;
   padding: 1.4rem 3rem; }
+  .link--on-list {
+    margin: 2.5rem auto 0 auto;
+    padding: 1.2rem 3rem; }
 
 .link__shortened a {
   text-decoration: none;
@@ -188,22 +194,31 @@ input:focus {
 .link__shortened a:hover {
   text-decoration: underline; }
 
-.link__copy {
-  margin-left: 1rem;
-  background: #eee;
+.link__copy,
+.link__delete {
   border: none;
   justify-content: center;
   width: 3rem;
   height: 3rem;
   border-radius: 500px;
-  cursor: pointer; }
+  cursor: pointer;
+  background: #eee; }
+
+.link__copy {
+  margin-left: 1rem; }
+
+.link__delete {
+  margin-left: .5rem; }
 
 .link__copy:hover,
-.link__copy:focus {
-  background: #e2dbdb;
+.link__copy:focus,
+.link__delete:hover,
+.link__delete:focus {
+  background: #e8e8e8;
   outline: none; }
 
-.link__copy img {
+.link__copy img,
+.link__delete img {
   width: 1.6rem; }
 
 .lds-ellipsis {

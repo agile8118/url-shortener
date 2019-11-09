@@ -56,9 +56,13 @@ middlewares.checkRealUrlExistence = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    console.log(error);
     res.status(500).send("An unkown error ocurred.");
   }
+};
+
+middlewares.requireAuth = (req, res, next) => {
+  if (!req.user) return res.status(401).send({ message: "Unauthorized" });
+  next();
 };
 
 module.exports = middlewares;

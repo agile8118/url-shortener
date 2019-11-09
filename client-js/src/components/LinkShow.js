@@ -1,12 +1,23 @@
 import React from "react";
 
-export default ({ realUrl, shortenedUrl }) => {
+export default ({ realUrl, shortenedUrl, onList }) => {
   // Decide whether to show the link component or not
   let linkClassName = realUrl ? "link" : "link display-none";
+  linkClassName = onList ? linkClassName + " link--on-list" : linkClassName;
 
   // If the real url was longer than 35 characters, substring it
   let displayedRealUrl = realUrl;
   if (realUrl.length > 35) displayedRealUrl = realUrl.substring(0, 35) + "...";
+
+  // If on list show the delete button
+  let deleteButton = "";
+  if (onList) {
+    deleteButton = (
+      <button onClick={() => {}} className="link__delete">
+        <img src="/trash.svg" />
+      </button>
+    );
+  }
 
   return (
     <div className={linkClassName}>
@@ -17,24 +28,38 @@ export default ({ realUrl, shortenedUrl }) => {
         </a>
         <div className="tooltip">
           <button
-            onClick={() => {
+            onClick={e => {
+              // Represent to the user that the link was copied
+              if (e.target.tagName === "IMG") {
+                // if image tag got clicked
+                e.target.parentElement.nextSibling.innerHTML = "Copied!";
+              }
+              if (e.target.tagName === "BUTTON") {
+                // if the button got clicked
+                e.target.nextSibling.innerHTML = "Copied!";
+              }
+
               // Grap the text and copy it to the clipboard
               navigator.clipboard.writeText(shortenedUrl).then(function() {});
-
-              // Represent to the user that the link was copied
-              document.querySelector("#tooltipText").innerHTML = "Copied!";
             }}
-            onMouseLeave={() => {
-              document.querySelector("#tooltipText").innerHTML = "Copy";
+            onMouseLeave={e => {
+              // Revert the tooltip text to the original
+              if (e.target.tagName === "IMG") {
+                // if image tag got clicked
+                e.target.parentElement.nextSibling.innerHTML = "Copy";
+              }
+              if (e.target.tagName === "BUTTON") {
+                // if the button got clicked
+                e.target.nextSibling.innerHTML = "Copy";
+              }
             }}
             className="link__copy"
           >
             <img src="/copy-document.svg" />
           </button>
-          <span id="tooltipText" className="tooltip__text">
-            Copy
-          </span>
+          <span className="tooltip__text">Copy</span>
         </div>
+        {deleteButton}
       </div>
     </div>
   );

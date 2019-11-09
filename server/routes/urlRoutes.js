@@ -8,6 +8,27 @@ module.exports = app => {
     res.render("index.html");
   });
 
+  app.get("/url", middlewares.requireAuth, async (req, res) => {
+    let data = await DB.find(
+      `SELECT real_url, shortened_url_id, id FROM urls WHERE user_id=${req.user.id}`
+    );
+
+    if (!data.length) {
+      // Create a new arr with the object if we have only one record
+      let arr = [];
+      arr.push(data);
+      res.send({
+        urls: arr,
+        domain: keys.domain
+      });
+    } else {
+      res.send({
+        urls: data,
+        domain: keys.domain
+      });
+    }
+  });
+
   // Get the url, shorten it and save to database
   app.post(
     "/url",

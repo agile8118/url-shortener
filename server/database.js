@@ -42,7 +42,8 @@ connection.query(
 
 const DB = {};
 
-// Fetch an item from the database
+// Fetch from the database, returns an array if there were more than one
+// record or an object if there was only one record
 DB.find = query => {
   return new Promise(function(resolve, reject) {
     connection.query(query, function(error, results) {
