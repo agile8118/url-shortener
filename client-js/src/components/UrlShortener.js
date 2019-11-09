@@ -126,8 +126,7 @@ class UrlShortener extends Component {
 
         <p className="a-1">
           By clicking Shorten, you agree to our <a href="#">Privacy Policy</a>{" "}
-          and
-          <a href="#">Terms of Use</a>.
+          and <a href="#">Terms of Use</a>.
         </p>
       </section>
     );

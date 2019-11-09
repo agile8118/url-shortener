@@ -17,7 +17,9 @@ connection.query(
      real_url TEXT NOT NULL,
      shortened_url_id VARCHAR(100) NOT NULL UNIQUE,
      created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-     views INTEGER DEFAULT 0 NOT NULL
+     user_id INT,
+     views INTEGER DEFAULT 0 NOT NULL,
+     FOREIGN KEY(user_id) REFERENCES users(id)
    );`,
   function(err, result) {
     if (err) throw err;

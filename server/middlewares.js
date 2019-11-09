@@ -29,12 +29,23 @@ middlewares.isValidURL = (req, res, next) => {
   }
 };
 
+// We don't want duplicated urls for a specified user
 middlewares.checkRealUrlExistence = async (req, res, next) => {
   try {
+    // Get the user id if the use is logged in
+    let userId = req.user ? req.user.id : null;
+
     const realUrl = req.body.url;
-    const result = await DB.find(
-      `select * from urls where real_url = '${realUrl}'`
-    );
+    let result;
+    if (userId) {
+      result = await DB.find(
+        `SELECT * FROM urls WHERE real_url = '${realUrl}' AND user_id = '${userId}'`
+      );
+    } else {
+      result = await DB.find(
+        `SELECT * FROM urls WHERE real_url = '${realUrl}' AND user_id IS NULL`
+      );
+    }
 
     if (result.id) {
       res.status(200).send({
@@ -45,6 +56,7 @@ middlewares.checkRealUrlExistence = async (req, res, next) => {
       next();
     }
   } catch (error) {
+    console.log(error);
     res.status(500).send("An unkown error ocurred.");
   }
 };

@@ -14,6 +14,9 @@ module.exports = app => {
     middlewares.isValidURL,
     middlewares.checkRealUrlExistence,
     async (req, res) => {
+      // Get the user id if the use is logged in
+      let userId = req.user ? req.user.id : null;
+
       const realUrl = req.body.url;
       // Generate a 6 digts number to be used as url shortened id
       let urlId = (Math.floor(Math.random() * 90000) + 10000).toString();
@@ -37,7 +40,16 @@ module.exports = app => {
       }
 
       // Insert a new record to url table
-      await DB.insert("urls", { real_url: realUrl, shortened_url_id: urlId });
+      if (userId) {
+        await DB.insert("urls", {
+          real_url: realUrl,
+          shortened_url_id: urlId,
+          user_id: userId
+        });
+      } else {
+        await DB.insert("urls", { real_url: realUrl, shortened_url_id: urlId });
+      }
+
       return res.send({
         realURL: realUrl,
         shortenedURL: `${keys.domain}${urlId}`
