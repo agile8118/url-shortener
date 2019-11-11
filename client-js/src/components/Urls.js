@@ -1,16 +1,59 @@
 import React, { Component } from "react";
 import axios from "axios";
 import LinkShow from "./LinkShow";
+import ConfirmationModal from "./ConfirmationModal";
 import Loading from "./Loading";
 
 class Urls extends Component {
-  state = { urls: null, domain: null };
+  constructor(props) {
+    super(props);
+    this.state = { urls: null, domain: null };
+    // the element to show the complete url of the selected url for deletion
+    this.confirmationDisplayedUrl = React.createRef();
+  }
 
   async componentDidMount() {
     const { data } = await axios.get("/url");
 
-    this.setState({ urls: data.urls, domain: data.domain });
+    this.setState({
+      urls: data.urls,
+      domain: data.domain,
+      selectedUrlIdForDeletion: null,
+      confirmationShow: false
+    });
   }
+
+  // Open the confirmation modal for deleting a url
+  toggleConfirmationModal = (urlId = null, realUrl) => {
+    if (urlId) {
+      this.setState({
+        selectedUrlIdForDeletion: urlId,
+        confirmationShow: true
+      });
+      this.confirmationDisplayedUrl.current.innerHTML = realUrl;
+    } else {
+      this.setState({
+        confirmationShow: false
+      });
+    }
+  };
+
+  // Send the delete request to the server
+  onDeleteConfirmed = async callback => {
+    const urlId = this.state.selectedUrlIdForDeletion;
+    try {
+      const { data } = await axios.delete("/url/" + urlId);
+      const newUrls = this.state.urls.filter(url => {
+        if (url.id === urlId) {
+          return false;
+        }
+        return true;
+      });
+      this.setState({ urls: newUrls, selectedUrlIdForDeletion: null });
+      this.toggleConfirmationModal();
+      callback();
+    } catch (e) {}
+  };
 
   renderUrls() {
     // Data has not came from database yet
@@ -24,9 +67,11 @@ class Urls extends Component {
         return (
           <LinkShow
             key={url.id}
+            urlId={url.id}
             realUrl={url.real_url}
             onList={true}
             shortenedUrl={`${this.state.domain}${url.shortened_url_id}`}
+            toggleConfirmationModal={this.toggleConfirmationModal}
           />
         );
       });
@@ -52,6 +97,21 @@ class Urls extends Component {
         <p className="a-2">
           Signed in as {this.props.email}. <a href="/logout">Singout.</a>
         </p>
+        <ConfirmationModal
+          show={this.state.confirmationShow}
+          headerText="Delete The URL"
+          onConfirmed={this.onDeleteConfirmed}
+          onClosed={() => {
+            this.setState({ confirmationShow: false });
+          }}
+        >
+          <p>
+            Are you sure that you want to delete this URL and its shortened URL?
+            You cannot undo this.
+            <br />
+            <strong ref={this.confirmationDisplayedUrl}></strong>
+          </p>
+        </ConfirmationModal>
       </div>
     );
   }

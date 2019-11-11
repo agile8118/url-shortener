@@ -89,4 +89,8 @@ module.exports = app => {
 
     res.redirect(real_url);
   });
+
+  app.delete("/url/:id", middlewares.requireAuth, (req, res) => {
+    res.send({ message: "deleted" });
+  });
 };
