@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import dom from "../lib/dom";
 import LinkShow from "./LinkShow";
 import ConfirmationModal from "./ConfirmationModal";
 import Loading from "./Loading";
@@ -8,7 +9,7 @@ class Urls extends Component {
   constructor(props) {
     super(props);
     this.state = { urls: null, domain: null };
-    // the element to show the complete url of the selected url for deletion
+    // the element in confirmation modal to show a complete url
     this.confirmationDisplayedUrl = React.createRef();
   }
 
@@ -23,7 +24,7 @@ class Urls extends Component {
     });
   }
 
-  // Open the confirmation modal for deleting a url
+  // Open/Close the confirmation modal for deleting a url
   toggleConfirmationModal = (urlId = null, realUrl) => {
     if (urlId) {
       this.setState({
@@ -42,7 +43,7 @@ class Urls extends Component {
   onDeleteConfirmed = async callback => {
     const urlId = this.state.selectedUrlIdForDeletion;
     try {
-      const { data } = await axios.delete("/url/" + urlId);
+      await axios.delete("/url/" + urlId);
       const newUrls = this.state.urls.filter(url => {
         if (url.id === urlId) {
           return false;
@@ -52,7 +53,13 @@ class Urls extends Component {
       this.setState({ urls: newUrls, selectedUrlIdForDeletion: null });
       this.toggleConfirmationModal();
       callback();
-    } catch (e) {}
+      dom.message("URL deleted successfully.", "success");
+    } catch ({ response }) {
+      // TODO - show an error message to user
+      dom.message("Sorry, an unkown error occured, please try again later.", "error");
+      this.toggleConfirmationModal();
+      callback();
+    }
   };
 
   renderUrls() {

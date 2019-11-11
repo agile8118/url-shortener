@@ -60,6 +60,18 @@ middlewares.checkRealUrlExistence = async (req, res, next) => {
   }
 };
 
+middlewares.checkUrlOwnership = async (req, res, next) => {
+  const urlId = req.params.id;
+  const { user_id } = await DB.find(
+    `SELECT user_id FROM urls WHERE id=${urlId}`
+  );
+  if (user_id === req.user.id) {
+    next();
+  } else {
+    res.status(403);
+  }
+};
+
 middlewares.requireAuth = (req, res, next) => {
   if (!req.user) return res.status(401).send({ message: "Unauthorized" });
   next();

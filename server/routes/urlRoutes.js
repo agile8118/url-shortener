@@ -90,7 +90,14 @@ module.exports = app => {
     res.redirect(real_url);
   });
 
-  app.delete("/url/:id", middlewares.requireAuth, (req, res) => {
-    res.send({ message: "deleted" });
-  });
+  // Delete an url record
+  app.delete(
+    "/url/:id",
+    middlewares.requireAuth,
+    middlewares.checkUrlOwnership,
+    async (req, res) => {
+      await DB.delete(`DELETE FROM urls WHERE id=${req.params.id}`);
+      res.send({ message: "deleted" });
+    }
+  );
 };

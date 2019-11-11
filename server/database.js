@@ -85,4 +85,16 @@ DB.update = (sql, data) => {
   });
 };
 
+// Delete an item from a table
+DB.delete = sql => {
+  return new Promise(function(resolve, reject) {
+    connection.query(sql, (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve();
+    });
+  });
+};
+
 module.exports = { DB, connection };
