@@ -13,7 +13,16 @@ class Urls extends Component {
     this.confirmationDisplayedUrl = React.createRef();
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.props.onRef(this);
+    this.fetchUrls();
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
+
+  async fetchUrls() {
     const { data } = await axios.get("/url");
 
     this.setState({
@@ -56,7 +65,10 @@ class Urls extends Component {
       dom.message("URL deleted successfully.", "success");
     } catch ({ response }) {
       // TODO - show an error message to user
-      dom.message("Sorry, an unkown error occured, please try again later.", "error");
+      dom.message(
+        "Sorry, an unkown error occured, please try again later.",
+        "error"
+      );
       this.toggleConfirmationModal();
       callback();
     }

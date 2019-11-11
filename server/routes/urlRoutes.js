@@ -10,7 +10,7 @@ module.exports = app => {
 
   app.get("/url", middlewares.requireAuth, async (req, res) => {
     let data = await DB.find(
-      `SELECT real_url, shortened_url_id, id FROM urls WHERE user_id=${req.user.id}`
+      `SELECT real_url, shortened_url_id, id FROM urls WHERE user_id=${req.user.id} ORDER BY created_at DESC`
     );
 
     if (!data.length) {

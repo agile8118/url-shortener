@@ -37,6 +37,7 @@ class UrlShortener extends Component {
         // Make the button as normall
         this.shortenButton.current.classList.remove("display-none");
         this.loadingButton.current.classList.add("display-none");
+        this.props.onNewUrl();
       } catch (error) {
         // Show relevent errors to user on server errors
         if (error.response.status === 400) {

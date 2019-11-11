@@ -17,7 +17,6 @@ export default ({
 
   // If on list show the delete button
   let deleteButton;
-  let deleteModal;
   if (onList) {
     deleteButton = (
       <button
