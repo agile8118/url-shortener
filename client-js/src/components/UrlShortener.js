@@ -7,10 +7,32 @@ class UrlShortener extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { url: "", realUrl: "", shortenedUrl: "", errorMessage: "" };
+    this.state = {
+      url: "",
+      urlId: "",
+      realUrl: "",
+      shortenedUrl: "",
+      errorMessage: ""
+    };
 
     this.loadingButton = React.createRef();
     this.shortenButton = React.createRef();
+  }
+
+  componentDidMount() {
+    this.props.onRef(this);
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
+
+  // Check to see if a deleted url is shown in this component
+  onDeleteUrl(id) {
+    if (this.state.urlId === id) {
+      // remove the url from the dom
+      this.setState({ realUrl: "", shortenedUrl: "", urlId: "" });
+    }
   }
 
   async onFormSubmit(event) {
@@ -31,6 +53,7 @@ class UrlShortener extends Component {
         this.setState({
           url: "",
           realUrl: data.realURL,
+          urlId: data.URLId,
           shortenedUrl: data.shortenedURL
         });
 

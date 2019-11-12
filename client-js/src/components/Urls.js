@@ -63,8 +63,9 @@ class Urls extends Component {
       this.toggleConfirmationModal();
       callback();
       dom.message("URL deleted successfully.", "success");
+      this.props.onDeleteUrl(urlId);
     } catch ({ response }) {
-      // TODO - show an error message to user
+      // show an error message to user on unexpected errors
       dom.message(
         "Sorry, an unkown error occured, please try again later.",
         "error"

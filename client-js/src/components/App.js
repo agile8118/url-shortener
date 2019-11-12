@@ -14,7 +14,16 @@ class App extends Component {
 
   renderBottomBox() {
     if (this.state.isSignedIn) {
-      return <Urls email={this.state.email} onRef={ref => (this.urls = ref)} />;
+      return (
+        <Urls
+          email={this.state.email}
+          onRef={ref => (this.urls = ref)}
+          onDeleteUrl={id => {
+            // notify the UrlShortener component that a url has been deleted
+            this.urlShortener.onDeleteUrl(id);
+          }}
+        />
+      );
     } else if (this.state.isSignedIn === false) {
       return <SignInBox />;
     } else {
@@ -26,6 +35,7 @@ class App extends Component {
     return (
       <div>
         <UrlShortener
+          onRef={ref => (this.urlShortener = ref)}
           onNewUrl={() => {
             // Call a method on the child component (Urls)
             this.urls.fetchUrls();

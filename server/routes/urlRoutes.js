@@ -13,12 +13,18 @@ module.exports = app => {
       `SELECT real_url, shortened_url_id, id FROM urls WHERE user_id=${req.user.id} ORDER BY created_at DESC`
     );
 
-    if (!data.length) {
+    console.log(data);
+    if (!data.length && data.length !== 0) {
       // Create a new arr with the object if we have only one record
       let arr = [];
       arr.push(data);
       res.send({
         urls: arr,
+        domain: keys.domain
+      });
+    } else if (data.length === 0) {
+      res.send({
+        urls: [],
         domain: keys.domain
       });
     } else {
@@ -61,8 +67,9 @@ module.exports = app => {
       }
 
       // Insert a new record to url table
+      let insertedData = null;
       if (userId) {
-        await DB.insert("urls", {
+        insertedData = await DB.insert("urls", {
           real_url: realUrl,
           shortened_url_id: urlId,
           user_id: userId
@@ -72,6 +79,7 @@ module.exports = app => {
       }
 
       return res.send({
+        URLId: insertedData,
         realURL: realUrl,
         shortenedURL: `${keys.domain}${urlId}`
       });
