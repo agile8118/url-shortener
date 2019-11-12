@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "./Loading";
 
 export default props => {
   // Decode whether or not to show the modal
@@ -23,13 +24,7 @@ export default props => {
         <div className="confirmation-modal__content">{props.children}</div>
         <div className="confirmation-modal__actions">
           <button className="display-none" disabled>
-            Deleting{" "}
-            <div className="lds-ellipsis">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
+            Deleting <Loading />
           </button>
           <button
             onClick={e => {

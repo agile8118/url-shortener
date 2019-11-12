@@ -78,7 +78,11 @@ class Urls extends Component {
   renderUrls() {
     // Data has not came from database yet
     if (!this.state.urls) {
-      return <Loading />;
+      return (
+        <div className="text-center margin-top-md">
+          <Loading />
+        </div>
+      );
     }
 
     // User has urls

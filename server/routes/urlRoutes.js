@@ -13,7 +13,7 @@ module.exports = app => {
       `SELECT real_url, shortened_url_id, id FROM urls WHERE user_id=${req.user.id} ORDER BY created_at DESC`
     );
 
-    console.log(data);
+    // If there's only one url
     if (!data.length && data.length !== 0) {
       // Create a new arr with the object if we have only one record
       let arr = [];
@@ -22,11 +22,13 @@ module.exports = app => {
         urls: arr,
         domain: keys.domain
       });
+      // If there is no url
     } else if (data.length === 0) {
       res.send({
         urls: [],
         domain: keys.domain
       });
+      // If there are more than one url
     } else {
       res.send({
         urls: data,

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import LinkShow from "./LinkShow";
+import Loading from "./Loading";
 import lib from "../lib";
 
 class UrlShortener extends Component {
@@ -133,12 +134,7 @@ class UrlShortener extends Component {
               disabled
             >
               Shortening
-              <div className="lds-ellipsis">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
+              <Loading />
             </button>
           </form>
         </div>
