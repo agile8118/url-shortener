@@ -4407,7 +4407,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar lib = {};\n\nlib.validURL = function (str) {\n  var pattern = new RegExp(\"^(https?:\\\\/\\\\/)?\" + // protocol\n  \"((([a-z\\\\d]([a-z\\\\d-]*[a-z\\\\d])*)\\\\.)+[a-z]{2,}|\" + // domain name\n  \"((\\\\d{1,3}\\\\.){3}\\\\d{1,3}))\" + // OR ip (v4) address\n  \"(\\\\:\\\\d+)?(\\\\/[-a-z\\\\d%_.~+]*)*\" + // port and path\n  \"(\\\\?[;&a-z\\\\d%_.~+=-]*)?\" + // query string\n  \"(\\\\#[-a-z\\\\d_]*)?$\", \"i\"); // fragment locator\n  return !!pattern.test(str);\n};\n\nexports.default = lib;\n\n//# sourceURL=webpack:///./src/lib/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar lib = {};\n\n/*\n  TODO - not working for the followings:\n  https://www.flaticon.com/free-icon/delete_1214428#term=trash&page=1&position=1\n*/\nlib.validURL = function (str) {\n  var pattern = new RegExp(\"^(https?:\\\\/\\\\/)?\" + // protocol\n  \"((([a-z\\\\d]([a-z\\\\d-]*[a-z\\\\d])*)\\\\.)+[a-z]{2,}|\" + // domain name\n  \"((\\\\d{1,3}\\\\.){3}\\\\d{1,3}))\" + // OR ip (v4) address\n  \"(\\\\:\\\\d+)?(\\\\/[-a-z\\\\d%_.~+]*)*\" + // port and path\n  \"(\\\\?[;&a-z\\\\d%_.~+=-]*)?\" + // query string\n  \"(\\\\#[-a-z\\\\d_]*)?$\", \"i\"); // fragment locator\n  return !!pattern.test(str);\n};\n\nexports.default = lib;\n\n//# sourceURL=webpack:///./src/lib/index.js?");
 
 /***/ }),
 

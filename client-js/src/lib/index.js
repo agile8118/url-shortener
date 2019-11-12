@@ -1,5 +1,9 @@
 const lib = {};
 
+/*
+  TODO - not working for the followings:
+  https://www.flaticon.com/free-icon/delete_1214428#term=trash&page=1&position=1
+*/
 lib.validURL = str => {
   var pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol

@@ -1,13 +1,10 @@
 const { DB } = require("../database");
 const middlewares = require("../middlewares");
+const util = require("../util");
 const keys = require("../config/keys");
 
 module.exports = app => {
-  // Show the home page
-  app.get("/", (req, res) => {
-    res.render("index.html");
-  });
-
+  // Return the list of urls user has shortened
   app.get("/url", middlewares.requireAuth, async (req, res) => {
     let data = await DB.find(
       `SELECT real_url, shortened_url_id, id FROM urls WHERE user_id=${req.user.id} ORDER BY created_at DESC`
@@ -90,14 +87,24 @@ module.exports = app => {
 
   // Redirect to the real url
   app.get("/:id", async (req, res) => {
+    if (!util.isValidUrlId(req.params.id))
+      return res.sendFile("no-url.html", {
+        root: __dirname + "../../../public"
+      });
+
     const { real_url, id } = await DB.find(
       `SELECT real_url, id FROM urls WHERE shortened_url_id=${req.params.id}`
     );
 
-    // Increment the views number by one
-    await DB.update(`UPDATE urls SET views = views + 1 WHERE id = ?`, [id]);
+    // We have found the link
+    if (id) {
+      // increment the views number by one
+      await DB.update(`UPDATE urls SET views = views + 1 WHERE id = ?`, [id]);
 
-    res.redirect(real_url);
+      res.redirect(real_url);
+    } else {
+      res.sendFile("no-url.html", { root: __dirname + "../../../public" });
+    }
   });
 
   // Delete an url record

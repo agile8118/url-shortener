@@ -120,6 +120,24 @@ a:hover {
   border-radius: 7px;
   margin-bottom: 1rem; }
 
+.box-message {
+  width: 65rem;
+  border-radius: 7px;
+  margin: 4rem auto 0 auto;
+  color: #fff;
+  background-color: #0A1636;
+  padding: 3rem 6rem;
+  border: 2px solid #070f22; }
+  .box-message h1 {
+    font-size: 6rem;
+    line-height: 0.9;
+    margin-bottom: 1rem; }
+  .box-message ul {
+    margin-top: 2rem;
+    font-size: 1.6rem; }
+    .box-message ul li {
+      margin-top: 1.2rem; }
+
 .button {
   padding: 1.5rem 4rem;
   font-size: 1.6rem;

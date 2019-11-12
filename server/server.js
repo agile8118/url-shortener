@@ -21,9 +21,19 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Show the home page
+app.get("/", (req, res) => {
+  res.sendFile("index.html", { root: __dirname + "/../public" });
+});
+
 // Routes
 require("./routes/authRoutes")(app);
 require("./routes/urlRoutes")(app);
+
+// Send 404 page
+app.get("*", (req, res) => {
+  res.sendFile("404.html", { root: __dirname + "/../public" });
+});
 
 const server = app.listen(port, () => {
   console.log("Server is on port " + port);

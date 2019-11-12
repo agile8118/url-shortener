@@ -8,6 +8,10 @@ middlewares.isValidURL = (req, res, next) => {
   if (url.length === 0)
     return res.status(400).send("Please first put your URL here.");
 
+  /*
+    TODO - not working for the followings:
+    https://www.flaticon.com/free-icon/delete_1214428#term=trash&page=1&position=1
+  */
   // Function to validate url
   const validURL = str => {
     var pattern = new RegExp(
