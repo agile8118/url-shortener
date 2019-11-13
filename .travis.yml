@@ -8,8 +8,11 @@ services:
   - mysql
 
 before_install:
-  - echo "Before installing..."
   - mysql -e 'CREATE DATABASE url_shortener;'
 
 script:
   - npm test
+  - cd ./client-js && npm test && cd ..
+
+on:
+  branch: master
