@@ -10,6 +10,20 @@ let connection = mysql.createConnection({
   port: keys.mysqlPort
 });
 
+// Create user table
+connection.query(
+  `CREATE TABLE IF NOT EXISTS users (
+     id INTEGER AUTO_INCREMENT PRIMARY KEY,
+     google_id VARCHAR(200) NOT NULL,
+     email VARCHAR(200) NOT NULL UNIQUE,
+     name VARCHAR(200) NOT NULL,
+     created_at TIMESTAMP DEFAULT NOW() NOT NULL
+   );`,
+  function(err, result) {
+    if (err) throw err;
+  }
+);
+
 // Create the urls table
 connection.query(
   `CREATE TABLE IF NOT EXISTS urls (
@@ -20,20 +34,6 @@ connection.query(
      user_id INT,
      views INTEGER DEFAULT 0 NOT NULL,
      FOREIGN KEY(user_id) REFERENCES users(id)
-   );`,
-  function(err, result) {
-    if (err) throw err;
-  }
-);
-
-// Create user table
-connection.query(
-  `CREATE TABLE IF NOT EXISTS users (
-     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-     google_id VARCHAR(200) NOT NULL,
-     email VARCHAR(200) NOT NULL UNIQUE,
-     name VARCHAR(200) NOT NULL,
-     created_at TIMESTAMP DEFAULT NOW() NOT NULL
    );`,
   function(err, result) {
     if (err) throw err;

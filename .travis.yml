@@ -1,0 +1,10 @@
+sudo: required
+language: node_js
+node_js:
+  - 10
+
+before_install:
+  - echo "Before installing..."
+
+script:
+  - npm test

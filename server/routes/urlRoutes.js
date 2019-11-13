@@ -66,9 +66,9 @@ module.exports = app => {
       }
 
       // Insert a new record to url table
-      let insertedData = null;
+      let insertedId = null;
       if (userId) {
-        insertedData = await DB.insert("urls", {
+        insertedId = await DB.insert("urls", {
           real_url: realUrl,
           shortened_url_id: urlId,
           user_id: userId
@@ -78,7 +78,7 @@ module.exports = app => {
       }
 
       return res.send({
-        URLId: insertedData,
+        URLId: insertedId,
         realURL: realUrl,
         shortenedURL: `${keys.domain}${urlId}`
       });
