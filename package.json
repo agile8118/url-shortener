@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --testTimeout=10000",
+    "test": "jest --testTimeout=10000",
     "start": "node server/server.js",
     "dev": "nodemon server/server.js",
     "build": "cd ./client-js && npm run build && cd .. && cd ./sass && npm run build && cd .."
@@ -12,11 +12,8 @@
   "author": "",
   "jest": {
     "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/.git/",
-      "/public",
-      "sass"
+    "testPathIgnorePatterns": [
+      "/client-js/"
     ]
   },
   "license": "ISC",
@@ -30,6 +27,7 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "jest": "^24.9.0",
     "supertest": "^4.0.2"
   }
