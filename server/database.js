@@ -6,7 +6,7 @@ let connection = mysql.createConnection({
   host: keys.mysqlHost,
   user: keys.mysqlUser,
   database: keys.mysqlDatabase,
-  password: keys.mysqlPassword,
+  password: keys.mysqlPassword || "",
   port: keys.mysqlPort
 });
 

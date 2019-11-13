@@ -1,10 +1,15 @@
 sudo: required
 language: node_js
+
 node_js:
   - 10
 
+services:
+  - mysql
+
 before_install:
   - echo "Before installing..."
+  - mysql -e 'CREATE DATABASE url_shortener;'
 
 script:
   - npm test
