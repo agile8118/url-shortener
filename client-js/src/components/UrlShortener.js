@@ -44,9 +44,14 @@ class UrlShortener extends Component {
     this.shortenButton.current.classList.add("display-none");
     this.loadingButton.current.classList.remove("display-none");
 
-    if (lib.validURL(this.state.url)) {
+    let url = this.state.url;
+    if (!url.match(/^[a-zA-Z]+:\/\//)) {
+      url = "http://" + url;
+    }
+
+    if (lib.validURL(url)) {
       try {
-        const { data } = await axios.post("/url", { url: this.state.url });
+        const { data } = await axios.post("/url", { url });
 
         // Hide the error
         this.hideError();
@@ -62,13 +67,13 @@ class UrlShortener extends Component {
         this.shortenButton.current.classList.remove("display-none");
         this.loadingButton.current.classList.add("display-none");
         this.props.onNewUrl();
-      } catch (error) {
+      } catch ({ response }) {
         // Show relevent errors to user on server errors
-        if (error.response.status === 400) {
-          this.showError(this.responseText);
+        if (response.status === 400) {
+          this.showError(response.data);
         }
 
-        if (error.response.status === 500) {
+        if (response.status === 500) {
           this.showError(
             "Sorry an unexpected error happened please try again."
           );

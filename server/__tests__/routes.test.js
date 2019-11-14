@@ -7,11 +7,11 @@ describe("URL Endpoints", () => {
     const res = await request(app)
       .post("/url")
       .send({
-        url: "www.example.com"
+        url: "http://www.example.com"
       });
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty("shortenedURL");
-    expect(res.body.realURL).toEqual("www.example.com");
+    expect(res.body.realURL).toEqual("http://www.example.com");
     done();
   });
 
