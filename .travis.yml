@@ -9,7 +9,6 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE url_shortener;'
-  - cd ./client-js && npm install && cd ..
 
 script:
   - npm test

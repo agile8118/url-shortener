@@ -21,7 +21,7 @@ describe("when user is signed out", () => {
   });
 
   it("shows the sing in and url shortener boxes", done => {
-    const wrapped = mount(<App />);
+    const wrapped = shallow(<App />);
     moxios.wait(() => {
       wrapped.update();
       expect(wrapped.find(UrlShortener).length).toEqual(1);
@@ -45,7 +45,7 @@ describe("when user is signed in", () => {
   });
 
   it("shows a list of urls and url shortener box", done => {
-    const wrapped = mount(<App />);
+    const wrapped = shallow(<App />);
     moxios.wait(() => {
       wrapped.update();
       expect(wrapped.find(UrlShortener).length).toEqual(1);

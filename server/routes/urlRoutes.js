@@ -87,10 +87,12 @@ module.exports = app => {
 
   // Redirect to the real url
   app.get("/:id", async (req, res) => {
-    if (!util.isValidUrlId(req.params.id))
-      return res.sendFile("no-url.html", {
-        root: __dirname + "../../../public"
-      });
+    if (process.env.NODE_ENV === "production") {
+      if (!util.isValidUrlId(req.params.id))
+        return res.sendFile("no-url.html", {
+          root: __dirname + "../../../public"
+        });
+    }
 
     const { real_url, id } = await DB.find(
       `SELECT real_url, id FROM urls WHERE shortened_url_id=${req.params.id}`
