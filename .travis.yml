@@ -15,5 +15,16 @@ script:
   - npm test
   - cd ./client-js && npm test && cd ..
 
-on:
-  branch: master
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: url-shortener
+  env: UrlShortener-env
+  bucket_name: elasticbeanstalk-us-east-1-250241665995
+  bucket_path: url-shortener
+  on:
+    branch: master
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
