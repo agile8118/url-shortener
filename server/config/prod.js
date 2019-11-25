@@ -3,10 +3,5 @@ module.exports = {
   googleClientID: process.env.GOOGLE_CLIENT_ID,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   cookieKey: process.env.COOKIE_KEY,
-  mysqlUrl: process.env.JAWSDB_URL || process.env.MYSQL_URL,
-  mysqlHost: process.env.MYSQL_HOST,
-  mysqlUser: process.env.MYSQL_USER,
-  mysqlDatabase: process.env.MYSQL_DATABASE,
-  mysqlPassword: process.env.MYSQL_PASSWORD,
-  mysqlPort: process.env.MYSQL_PORT
+  mysqlUrl: process.env.MYSQL_URL
 };
