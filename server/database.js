@@ -2,13 +2,7 @@ const mysql = require("mysql");
 const keys = require("./config/keys");
 
 // Connect to the database
-let connection = mysql.createConnection({
-  host: keys.mysqlHost,
-  user: keys.mysqlUser,
-  database: keys.mysqlDatabase,
-  password: keys.mysqlPassword || "",
-  port: keys.mysqlPort
-});
+let connection = mysql.createConnection(keys.mysqlUrl);
 
 // Create user table
 connection.query(
