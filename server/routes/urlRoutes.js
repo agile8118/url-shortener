@@ -45,7 +45,7 @@ module.exports = app => {
 
       const realUrl = req.body.url;
       // Generate a 6 digts number to be used as url shortened id
-      let urlId = (Math.floor(Math.random() * 90000) + 10000).toString();
+      let urlId = (Math.floor(Math.random() * 90000) + 100000).toString();
 
       let url_ids = [];
 
@@ -87,12 +87,10 @@ module.exports = app => {
 
   // Redirect to the real url
   app.get("/:id", async (req, res) => {
-    if (process.env.NODE_ENV === "production") {
-      if (!util.isValidUrlId(req.params.id))
-        return res.sendFile("no-url.html", {
-          root: __dirname + "../../../public"
-        });
-    }
+    if (!util.isValidUrlId(req.params.id))
+      return res.sendFile("no-url.html", {
+        root: __dirname + "../../../public"
+      });
 
     const { real_url, id } = await DB.find(
       `SELECT real_url, id FROM urls WHERE shortened_url_id=${req.params.id}`
