@@ -8,6 +8,14 @@
 
 html {
   font-size: 10px;
+
+  @media only screen and (max-width: 1200px) {
+    font-size: 9px; //1rem = 9px
+  }
+
+  @media only screen and (max-width: 900px) {
+    font-size: 8px; //1rem = 8px
+  }
 }
 
 body {
@@ -59,12 +67,24 @@ a:hover {
 .section {
   background: #0a1636;
   border-radius: 7px;
-  width: 100rem;
+  max-width: 100rem;
   padding: 5rem 2rem 4.5rem 2rem;
   margin: 4rem auto;
   box-shadow: 5px 5px 12px 4px rgba(0, 0, 0, 0.1);
+
+  @media only screen and (max-width: 820px) {
+    max-width: 95%;
+  }
 }
 
 .section--2 {
   padding: 4rem 7rem 4.5rem 7rem;
+
+  @media only screen and (max-width: 770px) {
+    padding: 3rem 4rem 3.5rem 4rem;
+  }
+
+  @media only screen and (max-width: 500px) {
+    padding: 3rem 2.5rem 3.5rem 2.5rem;
+  }
 }

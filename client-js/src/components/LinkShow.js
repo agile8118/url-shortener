@@ -38,40 +38,44 @@ export default ({
           <a target="_blank" href={shortenedUrl}>
             {shortenedUrl}
           </a>
-          <div className="tooltip">
-            <button
-              onClick={e => {
-                // Represent to the user that the link was copied
-                if (e.target.tagName === "IMG") {
-                  // if image tag got clicked
-                  e.target.parentElement.nextSibling.innerHTML = "Copied!";
-                }
-                if (e.target.tagName === "BUTTON") {
-                  // if the button got clicked
-                  e.target.nextSibling.innerHTML = "Copied!";
-                }
+          <div className="text-center">
+            <div className="tooltip">
+              <button
+                onClick={e => {
+                  // Represent to the user that the link was copied
+                  if (e.target.tagName === "IMG") {
+                    // if image tag got clicked
+                    e.target.parentElement.nextSibling.innerHTML = "Copied!";
+                  }
+                  if (e.target.tagName === "BUTTON") {
+                    // if the button got clicked
+                    e.target.nextSibling.innerHTML = "Copied!";
+                  }
 
-                // Grap the text and copy it to the clipboard
-                navigator.clipboard.writeText(shortenedUrl).then(function() {});
-              }}
-              onMouseLeave={e => {
-                // Revert the tooltip text to the original
-                if (e.target.tagName === "IMG") {
-                  // if image tag got clicked
-                  e.target.parentElement.nextSibling.innerHTML = "Copy";
-                }
-                if (e.target.tagName === "BUTTON") {
-                  // if the button got clicked
-                  e.target.nextSibling.innerHTML = "Copy";
-                }
-              }}
-              className="link__copy"
-            >
-              <img src="/copy-document.svg" />
-            </button>
-            <span className="tooltip__text">Copy</span>
+                  // Grap the text and copy it to the clipboard
+                  navigator.clipboard
+                    .writeText(shortenedUrl)
+                    .then(function() {});
+                }}
+                onMouseLeave={e => {
+                  // Revert the tooltip text to the original
+                  if (e.target.tagName === "IMG") {
+                    // if image tag got clicked
+                    e.target.parentElement.nextSibling.innerHTML = "Copy";
+                  }
+                  if (e.target.tagName === "BUTTON") {
+                    // if the button got clicked
+                    e.target.nextSibling.innerHTML = "Copy";
+                  }
+                }}
+                className="link__copy"
+              >
+                <img src="/copy-document.svg" />
+              </button>
+              <span className="tooltip__text">Copy</span>
+            </div>
+            {deleteButton}
           </div>
-          {deleteButton}
         </div>
       </div>
     </div>

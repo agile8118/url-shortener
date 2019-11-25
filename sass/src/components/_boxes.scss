@@ -4,7 +4,7 @@
   text-align: center;
 }
 
-.box--error .message{
+.box--error .message {
   display: inline-block;
 }
 
@@ -19,9 +19,13 @@
   font-size: 1.6rem;
   background: #c0392b;
   color: #fff;
-  padding: .8rem 2rem;
+  padding: 0.8rem 2rem;
   border-radius: 7px;
   margin-bottom: 1rem;
+
+  @media only screen and (max-width: 680px) {
+    width: 100%;
+  }
 }
 
 .box-message {
@@ -29,7 +33,7 @@
   border-radius: 7px;
   margin: 4rem auto 0 auto;
   color: #fff;
-  background-color: #0A1636;
+  background-color: #0a1636;
   padding: 3rem 6rem;
   border: 2px solid #070f22;
 
