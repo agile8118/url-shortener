@@ -3,6 +3,8 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
+const compression = require("compression");
+const helmet = require("helmet");
 const keys = require("./config/keys");
 require("./passport");
 
@@ -10,6 +12,8 @@ const app = express();
 const publicPath = path.join(__dirname, "../public");
 const port = process.env.PORT || 2080;
 
+app.use(helmet());
+app.use(compression());
 app.use(express.static(publicPath));
 app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }));
 app.use(
