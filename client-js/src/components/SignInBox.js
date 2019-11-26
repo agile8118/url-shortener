@@ -20,7 +20,7 @@ const SingInBox = () => {
         links you've shortened with your account.
       </p>
       <a className="button button-google-signin" href="/auth/google">
-        <img src="/google-icon.svg" /> Sign in with google
+        <img src="/google-icon.svg" alt="Google icon" /> Sign in with google
       </a>
     </section>
   );

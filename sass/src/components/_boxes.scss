@@ -23,7 +23,11 @@
   border-radius: 7px;
   margin-bottom: 1rem;
 
-  @media only screen and (max-width: 680px) {
+  @media only screen and (max-width: 640px) {
+    width: 90%;
+  }
+
+  @media only screen and (max-width: 400px) {
     width: 100%;
   }
 }
@@ -36,6 +40,11 @@
   background-color: #0a1636;
   padding: 3rem 6rem;
   border: 2px solid #070f22;
+
+  @media only screen and (max-width: 560px) {
+    width: 94%;
+    padding: 3rem 3rem;
+  }
 
   h1 {
     font-size: 6rem;

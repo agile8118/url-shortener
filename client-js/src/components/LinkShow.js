@@ -25,7 +25,7 @@ export default ({
         }}
         className="link__delete"
       >
-        <img src="/trash.svg" />
+        <img src="/trash.svg" alt="Delete icon" />
       </button>
     );
   }
@@ -70,7 +70,7 @@ export default ({
                 }}
                 className="link__copy"
               >
-                <img src="/copy-document.svg" />
+                <img src="/copy-document.svg" alt="Copy icon" />
               </button>
               <span className="tooltip__text">Copy</span>
             </div>
