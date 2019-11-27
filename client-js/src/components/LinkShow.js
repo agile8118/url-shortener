@@ -42,6 +42,8 @@ export default ({
             <div className="tooltip">
               <button
                 onClick={e => {
+                  Clipboard.copy(shortenedUrl);
+
                   // Represent to the user that the link was copied
                   if (e.target.tagName === "IMG") {
                     // if image tag got clicked
@@ -51,11 +53,6 @@ export default ({
                     // if the button got clicked
                     e.target.nextSibling.innerHTML = "Copied!";
                   }
-
-                  // Grap the text and copy it to the clipboard
-                  navigator.clipboard
-                    .writeText(shortenedUrl)
-                    .then(function() {});
                 }}
                 onMouseLeave={e => {
                   // Revert the tooltip text to the original
