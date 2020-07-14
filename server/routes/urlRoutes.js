@@ -80,7 +80,7 @@ module.exports = app => {
       return res.send({
         URLId: insertedId,
         realURL: realUrl,
-        shortenedURL: `${keys.domain}${urlId}`
+        shortenedURL: `${keys.domain}/${urlId}`
       });
     }
   );

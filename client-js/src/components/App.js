@@ -38,7 +38,7 @@ class App extends Component {
           onRef={ref => (this.urlShortener = ref)}
           onNewUrl={() => {
             // Call a method on the child component (Urls)
-            this.urls.fetchUrls();
+            if (this.urls) this.urls.fetchUrls();
           }}
         />
         {this.renderBottomBox()}

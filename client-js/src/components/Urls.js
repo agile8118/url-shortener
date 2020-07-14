@@ -94,7 +94,7 @@ class Urls extends Component {
             urlId={url.id}
             realUrl={url.real_url}
             onList={true}
-            shortenedUrl={`${this.state.domain}${url.shortened_url_id}`}
+            shortenedUrl={`${this.state.domain}/${url.shortened_url_id}`}
             toggleConfirmationModal={this.toggleConfirmationModal}
           />
         );

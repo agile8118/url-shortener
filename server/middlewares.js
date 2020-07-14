@@ -44,7 +44,7 @@ middlewares.checkRealUrlExistence = async (req, res, next) => {
       res.status(200).send({
         URLId: result.id,
         realURL: result.real_url,
-        shortenedURL: `${keys.domain}${result.shortened_url_id}`
+        shortenedURL: `${keys.domain}/${result.shortened_url_id}`
       });
     } else {
       next();

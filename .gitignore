@@ -2,3 +2,5 @@ node_modules
 .DS_Store
 dev.js
 .env
+deploy.sh
+ecosystem.config.js
