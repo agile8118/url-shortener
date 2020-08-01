@@ -9,16 +9,8 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE url_shortener;'
-  - cd ./client-js && npm install && cd ..
+  - cd ./client-js && npm install && cd .. && cd ./sass && npm install && cd ..
 
 script:
+  - npm run build
   - npm test
-  - cd ./client-js && npm test && cd ..
-
-deploy:
-  provider: heroku
-  on:
-    branch: master
-  api_key:
-    secure: $HEROKU_API_KEY
-  app: url-shortener-10
