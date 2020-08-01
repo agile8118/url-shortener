@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --testTimeout=10000",
+    "test": "jest --testTimeout=10000 && cd client-js && npm test && cd ..",
     "start": "node server/server.js",
     "dev": "nodemon server/server.js",
-    "build-statics": "cd ./client-js && npm run build && cd .. && cd ./sass && npm run build && cd .."
+    "build": "cd ./client-js && npm run build && cd .. && cd ./sass && npm run build && cd .."
   },
   "author": "",
   "jest": {

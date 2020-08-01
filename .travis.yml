@@ -12,13 +12,5 @@ before_install:
   - cd ./client-js && npm install && cd ..
 
 script:
+  - npm build
   - npm test
-  - cd ./client-js && npm test && cd ..
-
-deploy:
-  provider: heroku
-  on:
-    branch: master
-  api_key:
-    secure: $HEROKU_API_KEY
-  app: url-shortener-10
