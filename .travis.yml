@@ -12,5 +12,5 @@ before_install:
   - cd ./client-js && npm install && cd ..
 
 script:
-  - npm build
+  - npm run build
   - npm test
