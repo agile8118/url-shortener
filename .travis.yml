@@ -37,7 +37,7 @@ deploy:
     bucket: url-shortener-deployment-storage
     key: latest.zip
     bundle_type: zip
-    application: pagherDeployment
-    deployment_group: pagher
+    application: appDeployment
+    deployment_group: deploymentGroup
     region: us-east-1
     on: *2
