@@ -7,13 +7,14 @@ const SingInBox = () => {
       <p>
         If you create shortened links as a guest, your links will be removed
         from our database <strong>if they get no views after 1 month</strong>,
-        whereas if you sign in, your links will be permanent and they will never
-        get removed unless you choose so.
+        but if you sign in, your links will be permanent and they will never get
+        removed unless you choose so.
       </p>
       <p>
-        Signing in is <strong>completely free</strong> and requires only some
-        simple clicks. We won't send you any email, newsletter whatsoever, your
-        account is just something that we can use to keep track of your links.
+        You can sign in right now with a couple of simple clicks and it is{" "}
+        <strong> completely free.</strong> We won't send you any emails,
+        newsletters whatsoever, your account will only be used to keep track of
+        your links.
       </p>
       <p>
         Another advantage of signing in is that you can see the list of all the
