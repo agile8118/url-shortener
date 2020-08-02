@@ -3,4 +3,5 @@ node_modules
 dev.js
 .env
 deploy.sh
+logs
 ecosystem.config.js

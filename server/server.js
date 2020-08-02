@@ -5,6 +5,7 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const compression = require("compression");
 const helmet = require("helmet");
+const log = require("./lib/log");
 const keys = require("./config/keys");
 require("./passport");
 
@@ -25,6 +26,37 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+  const requestStart = Date.now();
+  // Grab requester ip address
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+  // Once the request is finished
+  res.on("finish", () => {
+    // Get req status code and message
+    const { statusCode, statusMessage } = res;
+    // Calculate how much it took the request to finish
+    const processingTime = Date.now() - requestStart;
+
+    // Format the log message and send it to log function
+    log(
+      ip +
+        " -- " +
+        req.method +
+        " " +
+        req.originalUrl +
+        " " +
+        statusCode +
+        " " +
+        statusMessage +
+        " -- response-time: " +
+        processingTime +
+        " ms"
+    );
+  });
+  next();
+});
+
 // Show the home page
 app.get("/", (req, res) => {
   res.sendFile("index.html", { root: __dirname + "/../public" });
@@ -40,6 +72,13 @@ app.get("*", (req, res) => {
 });
 
 const server = app.listen(port, () => {
+  log(
+    "Starting the server..." +
+      "\n----------------------------------\n" +
+      "Server has started on port " +
+      port +
+      "\n----------------------------------"
+  );
   console.log("Server is on port " + port);
 });
 
