@@ -13,7 +13,7 @@ class UrlShortener extends Component {
       urlId: "",
       realUrl: "",
       shortenedUrl: "",
-      errorMessage: ""
+      errorMessage: "",
     };
 
     this.loadingButton = React.createRef();
@@ -60,7 +60,7 @@ class UrlShortener extends Component {
           url: "",
           realUrl: data.realURL,
           urlId: data.URLId,
-          shortenedUrl: data.shortenedURL
+          shortenedUrl: data.shortenedURL,
         });
 
         // Make the button as normall
@@ -108,21 +108,21 @@ class UrlShortener extends Component {
         <h1>URL Shortener App</h1>
         <p>
           Just put your long URL in the text box below and click shorten to get
-          a nice small URL.
+          a nice small URL!
         </p>
 
         <div className={boxClassName}>
           <div className="message">{this.state.errorMessage}</div>
-          <form onSubmit={event => this.onFormSubmit(event)}>
+          <form onSubmit={(event) => this.onFormSubmit(event)}>
             <input
               type="text"
-              onChange={event => {
+              onChange={(event) => {
                 this.setState({ url: event.target.value });
               }}
-              onFocus={event => {
+              onFocus={(event) => {
                 event.target.placeholder = "";
               }}
-              onBlur={event => {
+              onBlur={(event) => {
                 event.target.placeholder = "Put your link here...";
               }}
               value={this.state.url}
