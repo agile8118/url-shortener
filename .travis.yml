@@ -15,6 +15,7 @@ script:
   - npm run build
   - npm test
   - rm -rf client-js
+  - rm -rf logs
   - rm -rf sass
   - zip -r latest *
   - mkdir -p dpl_cd_upload
