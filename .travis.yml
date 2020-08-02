@@ -14,6 +14,8 @@ before_install:
 script:
   - npm run build
   - npm test
+  - rm -rf client-js
+  - rm -rf sass
   - zip -r latest *
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
