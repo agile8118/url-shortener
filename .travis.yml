@@ -14,3 +14,27 @@ before_install:
 script:
   - npm run build
   - npm test
+  - zip -r latest *
+  - mkdir -p dpl_cd_upload
+  - mv latest.zip dpl_cd_upload/latest.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: dpl_cd_upload
+    skip_cleanup: true
+    on: &2
+      repo: agile8118/url-shortener
+    bucket: url-shortener-deployment-storage
+    region: us-east-1
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: url-shortener-deployment-storage
+    key: latest.zip
+    bundle_type: zip
+    application: pagherDeployment
+    deployment_group: pagher
+    region: us-east-1
+    on: *2
