@@ -1,6 +1,6 @@
 const { DB } = require("../database");
 const middlewares = require("../middlewares");
-const util = require("../util");
+const util = require("../lib/util");
 const keys = require("../config/keys");
 
 module.exports = app => {
