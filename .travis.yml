@@ -14,10 +14,7 @@ before_install:
 script:
   - npm run build
   - npm test
-  - rm -rf client-js
-  - rm -rf logs
-  - rm -rf sass
-  - zip -r latest *
+  - zip -r latest public scripts server package.json package-lock.json appspec.yml
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
 
