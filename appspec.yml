@@ -3,6 +3,7 @@ os: linux
 files:
   - source: ./
     destination: /home/ec2-user/url-shortener
+    overwrite: yes
 hooks:
   ApplicationStop:
     - location: scripts/stop_server.sh
