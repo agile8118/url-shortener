@@ -7,3 +7,6 @@ cd /home/ec2-user/url-shortener/
 
 echo Starting the app
 ~/.nvm/versions/node/v12.18.3/bin/pm2 start /home/ec2-user/url-shortener/ecosystem.config.js
+
+echo Testing the pm2
+pm2 -v
