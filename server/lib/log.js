@@ -3,7 +3,7 @@ const path = require("path");
 /*
   if the message parameter is object we log error and if it's string we log info
 */
-module.exports = (message) => {
+module.exports = message => {
   // Format the current date to use for each log
   const d = new Date();
   const dateString =
@@ -20,12 +20,7 @@ module.exports = (message) => {
     ("0" + d.getUTCSeconds()).slice(-2);
 
   // Base log directory
-  let dir;
-  if (process.env.NODE_ENV === "production") {
-    dir = path.join(__dirname, "../../../logs");
-  } else {
-    dir = path.join(__dirname, "../../logs");
-  }
+  let dir = path.join(__dirname, "../../logs");
 
   // If we don't have logs folder, create it
   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
@@ -48,7 +43,7 @@ module.exports = (message) => {
       "arguments",
       "type",
       "name",
-      "stack",
+      "stack"
     ]);
 
     const errStack = JSON.parse(errorStr).stack
@@ -79,7 +74,7 @@ module.exports = (message) => {
       "\n" +
       "---------------------------------------\n";
     // Add the log message to errors.log file in the right directory
-    fs.appendFile(dir + "/errors.log", msg, function (err) {
+    fs.appendFile(dir + "/errors.log", msg, function(err) {
       if (err) return console.error(err);
     });
   }
@@ -89,7 +84,7 @@ module.exports = (message) => {
     // Prepare the message to be logged
     const msg = dateString + " -- " + message + "\n";
     // Add the message to info.log file in the right directory
-    fs.appendFile(dir + "/info.log", msg, function (err) {
+    fs.appendFile(dir + "/info.log", msg, function(err) {
       if (err) return console.error(err);
     });
   }
