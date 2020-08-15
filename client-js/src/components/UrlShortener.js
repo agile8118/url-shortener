@@ -108,7 +108,7 @@ class UrlShortener extends Component {
         <h1>URL Shortener App</h1>
         <p>
           Just put your long URL in the text box below and click shorten to get
-          a nice small URL.
+          a nice small URL!
         </p>
 
         <div className={boxClassName}>
