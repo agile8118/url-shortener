@@ -5,6 +5,7 @@ phases:
     commands:
       - cd ./client-js && npm install && cd .. && cd ./sass && npm install && cd ..
       - npm run build
+      - npm test
 
 artifacts:
   files:
