@@ -1,3 +1,8 @@
+console.log(process.env.NODE_ENV);
+console.log(process.env.AWS_REGION);
+console.log(process.env.TEST_CODE_BUILD);
+console.log(process.env.DOMAIN);
+
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -20,7 +25,7 @@ app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    keys: [keys.cookieKey]
+    keys: [keys.cookieKey],
   })
 );
 app.use(passport.initialize());
