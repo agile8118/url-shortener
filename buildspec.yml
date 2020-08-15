@@ -1,13 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - apt-get update
-      - apt-get install -y systemd
-      - apt-get install -y mysql-server
-      - service mysql start
-      - mysql -e 'CREATE DATABASE url_shortener;'
   pre_build:
     commands:
       - npm install
