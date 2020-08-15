@@ -6,7 +6,7 @@ phases:
       - apt-get update
       - apt-get install -y systemd
       - apt-get install -y mysql-server
-      - systemctl start mysql
+      - service mysql start
       - mysql -e 'CREATE DATABASE url_shortener;'
   pre_build:
     commands:
