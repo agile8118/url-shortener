@@ -4,8 +4,9 @@ phases:
   install:
     commands:
       - apt-get update
+      - apt-get install systemd
       - apt-get install -y mysql-server
-      - su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
+      - systemctl start mysql
       - mysql -e 'CREATE DATABASE url_shortener;'
   pre_build:
     commands:
