@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jest",
+    "test": "jest",
     "start": "webpack --mode development -w",
     "build": "webpack --mode production"
   },
