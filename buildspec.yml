@@ -1,14 +1,20 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 10
   pre_build:
     commands:
+      - echo Installing app dependencies...
       - npm install
       - cd ./client-js && npm install && cd ..
       - cd ./sass && npm install && cd ..
   build:
     commands:
+      - echo Building files...
       - npm run build
+      - echo Running tests...
       - npm test
 
 artifacts:
@@ -19,3 +25,9 @@ artifacts:
     - appspec.yml
     - package-lock.json
     - package.json
+
+cache:
+  paths:
+    - "./node_modules/**/*"
+    - "./client-js/node_modules/**/*"
+    - "./sass/node_modules/**/*"
