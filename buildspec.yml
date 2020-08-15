@@ -10,7 +10,7 @@ artifacts:
   files:
     - public/*
     - scripts/*
-    - server/*
+    - server/**/*
     - appspec.yml
     - package-lock.json
     - package.json
