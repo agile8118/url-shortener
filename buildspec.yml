@@ -1,9 +1,11 @@
 version: 0.2
 
 phases:
-  build:
+  pre_build:
     commands:
       - cd ./client-js && npm install && cd .. && cd ./sass && npm install && cd ..
+  build:
+    commands:
       - npm run build
       - npm test
 
