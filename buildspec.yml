@@ -3,10 +3,10 @@ version: 0.2
 phases:
   install:
     commands:
-      - sudo apt-get update
-      - sudo apt-get install -y mysql-server
-      - sudo systemctl start mysql
-      - sudo mysql -e 'CREATE DATABASE url_shortener;'
+      - apt-get update
+      - apt-get install -y mysql-server
+      - systemctl start mysql
+      - mysql -e 'CREATE DATABASE url_shortener;'
   pre_build:
     commands:
       - npm install
