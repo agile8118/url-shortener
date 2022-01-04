@@ -13,7 +13,7 @@ connection.query(
      name VARCHAR(200) NOT NULL,
      created_at TIMESTAMP DEFAULT NOW() NOT NULL
    );`,
-  function(err, result) {
+  function (err, result) {
     if (err) throw err;
   }
 );
@@ -29,7 +29,7 @@ connection.query(
      views INTEGER DEFAULT 0 NOT NULL,
      FOREIGN KEY(user_id) REFERENCES users(id)
    );`,
-  function(err, result) {
+  function (err, result) {
     if (err) throw err;
   }
 );
@@ -38,9 +38,9 @@ const DB = {};
 
 // Fetch from the database, returns an array if there were more than one
 // record or an object if there was only one record
-DB.find = query => {
-  return new Promise(function(resolve, reject) {
-    connection.query(query, function(error, results) {
+DB.find = (query) => {
+  return new Promise(function (resolve, reject) {
+    connection.query(query, function (error, results) {
       if (error) {
         reject(error);
       } else {
@@ -56,9 +56,9 @@ DB.find = query => {
 
 // Insert an item to a specified table
 DB.insert = (table, data) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     const query = `INSERT INTO ${table} SET ?`;
-    connection.query(query, data, function(error, result) {
+    connection.query(query, data, function (error, result) {
       if (error) {
         reject(error);
       }
@@ -69,7 +69,7 @@ DB.insert = (table, data) => {
 
 // Update an item in the database
 DB.update = (sql, data) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     connection.query(sql, data, (error, results) => {
       if (error) {
         reject(error);
@@ -80,8 +80,8 @@ DB.update = (sql, data) => {
 };
 
 // Delete an item from a table
-DB.delete = sql => {
-  return new Promise(function(resolve, reject) {
+DB.delete = (sql) => {
+  return new Promise(function (resolve, reject) {
     connection.query(sql, (error, results) => {
       if (error) {
         reject(error);
