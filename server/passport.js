@@ -17,7 +17,7 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback"
+      callbackURL: `${keys.domain}/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       const googleId = profile.id;
@@ -36,7 +36,7 @@ passport.use(
         const id = await DB.insert("users", {
           email: userEmail,
           name: userName,
-          google_id: googleId
+          google_id: googleId,
         });
         const user = { id };
         done(null, user);
