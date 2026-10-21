@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const LOG_FILE = path.join(__dirname, "../logs/info.log");
+const LOG_FILE = path.join(import.meta.dirname, "../logs/info.log");
 
 fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });
 
@@ -22,4 +22,4 @@ const logRequests = (req, res, next) => {
   next();
 };
 
-module.exports = { logRequests };
+export { logRequests };

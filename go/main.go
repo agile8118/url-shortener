@@ -10,11 +10,20 @@ import (
 	"net/http"
 	"net/netip"
 	"os"
+	"strings"
 
 	"github.com/jackc/pgx/v5"
 )
 
+// A random 7-character code
 const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+func generateCode() string {
+	code := make([]byte, 7)
+	for i := range code {
+		code[i] = alphabet[rand.IntN(len(alphabet))]
+	}
+	return string(code)
+}
 
 func main() {
 	pool, err := connectDB()
@@ -35,13 +44,16 @@ func main() {
 		var body struct {
 			URL string `json:"url"`
 		}
-		if err := json.NewDecoder(r.Body).Decode(&body); err != nil || body.URL == "" {
+		err := json.NewDecoder(r.Body).Decode(&body)
+		realUrl := strings.TrimSpace(body.URL)
+
+		if err != nil || realUrl == "" {
 			http.Error(w, "url is required", http.StatusBadRequest)
 			return
 		}
 
 		code := generateCode()
-		if _, err := pool.Exec(r.Context(), "INSERT INTO urls (code, url) VALUES ($1, $2)", code, body.URL); err != nil {
+		if _, err := pool.Exec(r.Context(), "INSERT INTO urls (code, url) VALUES ($1, $2)", code, realUrl); err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
@@ -51,9 +63,11 @@ func main() {
 	})
 
 	mux.HandleFunc("GET /{code}", func(w http.ResponseWriter, r *http.Request) {
+		code := r.PathValue("code")
+
 		var id int
 		var url string
-		err := pool.QueryRow(r.Context(), "SELECT id, url FROM urls WHERE code = $1", r.PathValue("code")).Scan(&id, &url)
+		err := pool.QueryRow(r.Context(), "SELECT id, url FROM urls WHERE code = $1", code).Scan(&id, &url)
 		if errors.Is(err, pgx.ErrNoRows) {
 			http.Error(w, "Not found", http.StatusNotFound)
 			return
@@ -75,15 +89,6 @@ func main() {
 
 	log.Println("Listening on " + os.Getenv("PORT"))
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), logRequests(logFile, mux)))
-}
-
-// A random 7-character code
-func generateCode() string {
-	code := make([]byte, 7)
-	for i := range code {
-		code[i] = alphabet[rand.IntN(len(alphabet))]
-	}
-	return string(code)
 }
 
 // The visitor's address without the port, or nil if it can't be read

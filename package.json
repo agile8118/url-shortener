@@ -8,6 +8,7 @@
     "start:go": "pm2 start ecosystem.config.cjs --only url-shortener-go"
   },
   "dependencies": {
+    "cpeak": "^2.10.0",
     "express": "5.3.0",
     "pg": "8.23.1"
   }

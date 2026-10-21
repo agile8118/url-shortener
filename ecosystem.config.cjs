@@ -4,7 +4,7 @@
 // The port, and the PostgreSQL to use (setup.js reads it from here too)
 const env = {
   PORT: "2080",
-  DB_USER: "postgres", // change this to your PostgreSQL username
+  DB_USER: "postgres",
   DB_HOST: "localhost",
   DB_DATABASE: "url-shortener",
   DB_PASSWORD: "",

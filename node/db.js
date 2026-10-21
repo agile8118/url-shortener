@@ -1,5 +1,5 @@
-const os = require("os");
-const { Pool } = require("pg");
+import os from "os";
+import { Pool } from "pg";
 
 // The workers (one per core) share the DB_POOL_SIZE connections
 const pool = new Pool({
@@ -11,4 +11,4 @@ const pool = new Pool({
   max: Math.max(1, Math.floor(process.env.DB_POOL_SIZE / os.availableParallelism())),
 });
 
-module.exports = pool;
+export default pool;

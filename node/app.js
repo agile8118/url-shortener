@@ -1,8 +1,7 @@
-const express = require("express");
-const pool = require("./db");
-const { logRequests } = require("./logger");
+import express from "express";
+import pool from "./db.js";
+import { logRequests } from "./logger.js";
 
-const ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 const app = express();
 
@@ -10,6 +9,7 @@ app.use(logRequests);
 app.use(express.json());
 
 // A random 7-character code
+const ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const generateCode = () => {
   let code = "";
   for (let i = 0; i < 7; i++) code += ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
@@ -17,16 +17,20 @@ const generateCode = () => {
 };
 
 app.post("/url", async (req, res) => {
-  if (!req.body?.url) return res.status(400).json({ error: "url is required" });
+  const realUrl = req.body?.url?.trim();
+
+  if (!realUrl) return res.status(400).json({ error: "url is required" });
 
   const code = generateCode();
-  await pool.query("INSERT INTO urls (code, url) VALUES ($1, $2)", [code, req.body.url]);
+  await pool.query("INSERT INTO urls (code, url) VALUES ($1, $2)", [code, realUrl]);
 
   res.json({ code });
 });
 
 app.get("/:code", async (req, res) => {
-  const { rows } = await pool.query("SELECT id, url FROM urls WHERE code = $1", [req.params.code]);
+  const code = req.params.code;
+
+  const { rows } = await pool.query("SELECT id, url FROM urls WHERE code = $1", [code]);
   if (rows.length === 0) return res.status(404).send("Not found");
 
   await pool.query("INSERT INTO views (url_id, ip_address, user_agent, referrer) VALUES ($1, $2, $3, $4)", [
@@ -39,4 +43,6 @@ app.get("/:code", async (req, res) => {
   res.redirect(rows[0].url);
 });
 
-app.listen(process.env.PORT, () => console.log(`Listening on ${process.env.PORT}`));
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on ${process.env.PORT}`)
+});
