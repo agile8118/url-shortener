@@ -1,0 +1,14 @@
+{
+  "name": "url-shortener",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "setup": "yarn install && node setup.js && cd go && go build -o url-shortener .",
+    "start": "pm2 start ecosystem.config.cjs --only url-shortener",
+    "start:go": "pm2 start ecosystem.config.cjs --only url-shortener-go"
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "pg": "8.23.1"
+  }
+}
